@@ -1,0 +1,975 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#101112"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="MONO"><link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./icon-192.png"><title>MONO Finance 1.1.7</title><style>
+:root{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#ecf2f7;background:#0e141c;font-synthesis:none}*{box-sizing:border-box}body{margin:0}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:1050px;margin:auto;padding:22px 20px 100px}.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}.brand{font-size:25px;font-weight:800;letter-spacing:-1.5px}.brand span{color:#80c7ad}.muted{color:#94a5b5}.small{font-size:12px}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:1.4px;color:#a6b7c7;font-weight:700}.hero{padding:24px;border-radius:23px;background:linear-gradient(130deg,#233849,#162733 65%,#163e39);border:1px solid #344b59}.hero h1{font-size:35px;letter-spacing:-1.2px;margin:10px 0 5px}.hero p{margin:0;color:#bdcbd5;font-size:13px}.pill{background:#284c46;color:#9ce0c7;border-radius:20px;padding:7px 10px;font-size:12px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{background:#17222e;border:1px solid #2a3a47;border-radius:18px;padding:18px}.card h3{margin:0 0 12px;font-size:15px}.stat{font-size:24px;font-weight:750;margin:7px 0}.section{display:flex;align-items:center;justify-content:space-between;margin:26px 0 12px}.section h2{font-size:18px;margin:0}.btn{border:0;border-radius:12px;background:#84d5b5;color:#10221c;padding:11px 14px;font-weight:700}.btn.secondary{background:#283b4b;color:#dbe7f0}.btn.danger{background:#493039;color:#ffbdc3}.btn.tiny{padding:7px 10px;font-size:12px}.accounts{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px}.account{padding:15px;border-radius:15px;background:#17232f;border:1px solid #2b3b4a}.account strong{display:block;font-size:20px;margin-top:9px}.item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid #2a3947}.item:last-child{border-bottom:0}.item .right{text-align:right;white-space:nowrap}.tag{display:inline-block;background:#293c4c;border-radius:6px;padding:3px 6px;font-size:11px;color:#b6c7d4}.pos{color:#91dfbb}.neg{color:#f2ada5}.nav{position:fixed;bottom:0;left:0;right:0;background:#111b26eF;backdrop-filter:blur(12px);border-top:1px solid #34414d;display:flex;justify-content:center;padding:10px 12px calc(10px + env(safe-area-inset-bottom));gap:5px;z-index:5}.nav button{border:0;background:transparent;color:#9fb0bf;padding:8px 12px;border-radius:11px;min-width:75px}.nav button.active{color:#a7e8ce;background:#263b43}.view{display:none}.view.active{display:block}label{display:block;font-size:12px;color:#a8bdca;margin:10px 0 5px}input,select,textarea{width:100%;border:1px solid #3a4b58;background:#101b26;color:#eff6f9;padding:12px;border-radius:10px;outline:none}input:focus,select:focus{border-color:#82d4b6}dialog{width:min(94vw,480px);max-height:90vh;overflow:auto;border:1px solid #405262;border-radius:20px;background:#192734;color:#fff;padding:22px}dialog::backdrop{background:#000b}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}.row{display:flex;gap:10px}.row>*{flex:1;min-width:0}.empty{color:#93a8b7;padding:24px 0;font-size:14px}.progress{height:9px;background:#354652;border-radius:30px;overflow:hidden;margin-top:12px}.progress div{height:100%;background:#82d4b6}.notice{font-size:12px;color:#b5c5d1;line-height:1.5}.alert{padding:12px;border-radius:12px;background:#3d302a;color:#f1c7a7;font-size:13px}.chip{border:1px solid #405262;border-radius:9px;padding:9px;background:#22313d;color:#dbe6ee}.chartline{height:12px;background:#30404e;border-radius:6px;overflow:hidden;margin:8px 0 16px}.chartline div{height:100%;background:#84d5b5}.filters{display:flex;gap:8px;flex-wrap:wrap}.filters select{width:auto;max-width:100%}@media(min-width:760px){.hero h1{font-size:45px}.dashboard{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}.nav{left:50%;right:auto;transform:translateX(-50%);border:1px solid #34414d;border-radius:20px 20px 0 0}.app{padding-top:30px}}@media(max-width:400px){.nav button{min-width:0;flex:1;font-size:12px;padding:8px 3px}.grid{gap:8px}.stat{font-size:20px}}
+
+/* MONO 0.2 — dark forest / lime / lavender */
+:root{color-scheme:dark;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#F6F7F2;background:#101112;--mono-lime:#B5F35C;--mono-lavender:#AAA8FA;--mono-forest:#103D2F;--mono-muted:#989B9B}
+body{background:#101112;color:#F6F7F2} .app{max-width:720px;padding:25px 19px 126px}.top{margin-bottom:29px}.brand{font-size:28px;letter-spacing:-1.7px;color:#fff}.brand span{color:#B5F35C}.muted,.small.muted{color:#9B9D9C}.eyebrow{color:#A3A8A2;letter-spacing:1.25px}.pill{background:#202421;color:#B5F35C;border:1px solid #31392B;padding:9px 12px;font-weight:650}
+.hero{background:radial-gradient(ellipse at 100% 0%,#225740 0%,#164332 38%,#103D2F 85%);border:1px solid #285642;border-radius:27px;padding:25px 24px;box-shadow:0 12px 32px #0003;min-height:168px}.hero h1{font-size:clamp(28px,7vw,43px);font-weight:760;line-height:1.15;letter-spacing:-1.6px;margin:18px 0 10px;color:#FFFFFF}.hero p{color:#BED5C8}.section{margin:29px 0 13px}.section h2{font-size:18px;letter-spacing:-.45px}.card{background:#1D1F1F;border:1px solid #303331;border-radius:22px;padding:19px}.card h3{color:#F3F4EF}.stat{font-size:25px;letter-spacing:-.7px}.pos{color:#B5F35C}.neg{color:#FF958A}.grid>.card:first-child{background:#20291F;border-color:#344333}.grid>.card:nth-child(2){background:#262229;border-color:#3B343F}.account{background:#1D201E;border:1px solid #343A34;border-radius:19px;padding:17px}.account strong{font-size:21px;letter-spacing:-.5px}.item{border-bottom:1px solid #333735;padding:15px 0}.tag{background:#30342F;color:#C9D4C6;border-radius:8px;padding:4px 7px}.btn{background:#B5F35C;color:#15210E;border-radius:14px;padding:12px 15px}.btn.secondary{background:#2A2D2B;color:#F2F4EF}.btn.danger{background:#472B30;color:#FFBAB5}.btn.tiny{border-radius:11px}.nav{background:#161817F5;border-top:1px solid #343A34;padding:10px 10px calc(10px + env(safe-area-inset-bottom));gap:2px}.nav button{color:#929992;min-width:0;flex:1;border-radius:13px;font-size:11px;line-height:1.7;padding:6px 2px}.nav button.active{color:#B5F35C;background:#253122}.nav .add-action{background:#B5F35C;color:#14200F;font-weight:800;border-radius:17px;flex:0 0 65px;margin:-18px 6px 0;box-shadow:0 6px 22px #B5F35422;font-size:11px;padding:8px 2px}.nav .add-action:first-line{font-size:19px}
+input,select,textarea{background:#151716;border:1px solid #414742;color:#F5F7F1;border-radius:13px;padding:13px}input:focus,select:focus{border-color:#B5F35C}label{color:#B6C2B7}dialog{background:#1C1F1C;border:1px solid #465044;border-radius:26px;color:#fff}dialog::backdrop{background:#000C}.chip{background:#272D28;border-color:#414A40;color:#E5F0E1}.progress{background:#343B34}.progress div,.chartline div{background:#B5F35C}.chartline{background:#333B34}.alert{background:#2B2922;color:#F5D9A3;border:1px solid #45402D;border-radius:16px}.notice{color:#ABB3AC}.empty{color:#969F97}.filters select{background:#232723;border:1px solid #424941}.section .btn.secondary{color:#B5F35C}.dashboard{gap:18px}
+@media(min-width:760px){.app{padding-top:35px}.nav{border:1px solid #343A34;border-bottom:0;border-radius:24px 24px 0 0}.hero h1{font-size:43px}}@media(max-width:400px){.grid{gap:9px}.stat{font-size:21px}.nav button{font-size:10px}.nav .add-action{flex-basis:58px}}
+.link-existing{margin-top:12px;padding:12px;border:1px solid #384038;border-radius:14px}.link-existing summary,.bill-more summary{cursor:pointer;color:#b5f35c;font-size:13px}.bill-more{display:inline-block;vertical-align:middle}.bill-more button{margin:5px 4px 0 0}.liquidity-warning button{margin-top:8px}
+/* MONO 1.1.2 isolated planner dashboards */
+.mono-planner-chart-layout{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-top:16px}.mono-planner-donut{width:158px;height:158px;border-radius:50%;flex:0 0 158px;display:grid;place-items:center}.mono-planner-donut>div{width:111px;height:111px;border-radius:50%;background:#1e2520;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;text-align:center}.mono-planner-donut strong{font-size:13px}.mono-planner-legends{flex:1;min-width:160px}.mono-planner-legend{display:flex;align-items:center;gap:7px;padding:7px 0;border-bottom:1px solid #353d35;font-size:12px}.mono-planner-legend>span:nth-child(2){flex:1}.mono-planner-legend>strong{margin-left:auto;white-space:nowrap;font-size:12px}.mono-planner-dot{height:9px;width:9px;border-radius:50%;flex-shrink:0}.mono-planner-trend{display:flex;gap:8px;height:140px;align-items:end;margin-top:18px}.mono-planner-col{flex:1;min-width:0;text-align:center;display:flex;flex-direction:column;gap:4px;font-size:11px;color:#b7c0b4}.mono-planner-col-bar{height:94px;display:flex;align-items:end;background:#252d26;border-radius:5px;overflow:hidden}.mono-planner-col-bar>div{background:#b5f35c;width:100%;min-height:0;border-radius:4px 4px 0 0}.mono-planner-col small{font-size:10px}.mono-planner-legend:first-child{padding-top:0}
+@media(max-width:370px){.mono-planner-chart-layout{justify-content:center}.mono-planner-legends{min-width:100%}}
+
+/* MONO 1.1.4 — planner-only USD consolidation */
+#budget .mono-fx-card{min-width:0;border:1px solid #3c4936;background:linear-gradient(145deg,#202820,#1c211d);border-radius:20px;padding:18px 17px;margin:4px 0 19px}
+#budget .mono-fx-income{border-color:#335346;background:linear-gradient(145deg,#1c2e27,#1b2520)}
+#budget .mono-fx-eyebrow{font-size:11px;letter-spacing:1.25px;font-weight:800;color:#9ab4a0;margin-bottom:16px}
+#budget .mono-fx-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+#budget .mono-fx-stats>div{display:flex;flex-direction:column;gap:7px;min-width:0}
+#budget .mono-fx-stats span,#budget .mono-fx-difference span{font-size:12px;color:#aeb5ac}
+#budget .mono-fx-stats strong{font-size:clamp(19px,5.1vw,26px);line-height:1.2;letter-spacing:-.65px;overflow-wrap:anywhere}
+#budget .mono-fx-difference{display:flex;justify-content:space-between;align-items:baseline;gap:10px;border-top:1px solid #3b463b;margin-top:16px;padding-top:15px;flex-wrap:wrap}
+#budget .mono-fx-difference strong{font-size:20px;letter-spacing:-.5px;overflow-wrap:anywhere}
+#budget .mono-fx-warning{color:#f1b8a2;font-size:12px;margin:12px 0 0;line-height:1.45}
+#budget .mono-plan-result{background:linear-gradient(145deg,#143b2e,#1b2922);border:1px solid #3c6249;border-radius:23px;padding:20px 18px;margin:13px 0 16px}
+#budget .mono-plan-result-head{display:flex;align-items:center;gap:9px;font-size:17px;margin-bottom:19px}
+#budget .mono-plan-mark-result{width:10px;height:10px;flex:none;border-radius:50%;background:#b5f35c}
+#budget .mono-plan-result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+#budget .mono-plan-result-grid>div{display:flex;flex-direction:column;gap:8px;min-width:0}
+#budget .mono-plan-result-grid span,#budget .mono-plan-result-delta span{font-size:12px;color:#b3c5b9;line-height:1.4}
+#budget .mono-plan-result-grid strong{font-size:clamp(20px,5.5vw,27px);letter-spacing:-.6px;overflow-wrap:anywhere}
+#budget .mono-plan-result-delta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid #3a5a47;padding-top:15px;margin-top:17px;align-items:baseline}
+#budget .mono-plan-result-delta strong{font-size:21px;overflow-wrap:anywhere}
+#budget .mono-plan-result .notice{margin:16px 0 0}
+#budget .mono-fx-status{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#aeb9ad;font-size:11px;line-height:1.5;padding:2px 2px 0}
+#budget .mono-fx-status>span{flex:1;min-width:180px}
+#budget .mono-fx-status button{white-space:nowrap}
+#budget .mono-fx-disclaimer{font-size:11px;color:#929e92;line-height:1.5;margin:9px 2px 0}
+@media(max-width:370px){#budget .mono-fx-card{padding:15px 13px}#budget .mono-plan-result{padding:17px 14px}}
+</style><style>.bars{height:165px;display:flex;align-items:end;justify-content:space-around;gap:8px;margin:18px 0}.barcol{display:flex;flex-direction:column;align-items:center;gap:7px;color:#9fa7a3;font-size:11px;flex:1}.barpair{height:120px;display:flex;gap:4px;align-items:end}.bar{width:13px;border-radius:7px 7px 3px 3px}.bar.income{background:#B5F35C}.bar.expense{background:#AAA8FA}.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}.calweek{text-align:center;color:#909994;font-size:11px;padding:6px 0}.calday{min-height:49px;border:1px solid #303635;background:#1b2020;color:#f1f2ed;border-radius:11px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:13px}.calday.today{border-color:#B5F35C}.calday small{font-size:9px;color:#8e9892}.calday .neg{color:#aaa8fa}.calday .pos{color:#b5f35c}.sectiontitle{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}.sectiontitle select{max-width:90px}.sectiontitle button{padding:5px 10px}.card{margin-bottom:12px} .quick-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 17px}.quick-strip button{border:1px solid #374337;background:#202820;color:#eaf4e5;border-radius:15px;padding:13px 5px;font-weight:650;font-size:12px}.quick-strip button:first-child{background:#b5f35c;color:#17220f;border-color:#b5f35c}.quick-strip button:active{transform:scale(.98)}button:focus-visible{outline:2px solid #b5f35c;outline-offset:2px}@media(max-width:390px){.quick-strip button{font-size:11px}} 
+/* MONO 0.5 planning */
+.plan-item{padding:16px 0;border-bottom:1px solid #363b36}.plan-item:last-child{border-bottom:0}.plan-top{display:flex;justify-content:space-between;gap:10px;align-items:center}.plan-big{font-size:24px;font-weight:750;letter-spacing:-.7px;margin:10px 0}.plan-sub{background:#272a27;padding:10px;border-radius:12px;color:#c5cfc3;font-size:12px;line-height:1.9;margin-top:10px}.deduction-row{display:grid;grid-template-columns:1.5fr 1fr 75px 75px 32px;gap:5px;margin:8px 0}.deduction-row input,.deduction-row select{padding:8px 5px;font-size:12px;min-width:0}.deduction-row button{padding:4px}.home-bills{margin-bottom:12px}.home-bills:empty{display:none}.home-bills-title{display:flex;justify-content:space-between;align-items:center;font-weight:700;margin-bottom:8px}.bill-teaser{display:flex;justify-content:space-between;gap:8px;background:#202720;border:1px solid #384738;border-radius:14px;padding:12px;margin:7px 0;font-size:13px}.bill-teaser small{display:block;color:#a4ada1;margin-top:3px}.bill-teaser strong{white-space:nowrap;color:#b5f35c}
+
+/* MONO 0.6: iOS safe areas */
+@supports(padding-top:env(safe-area-inset-top)){.app{padding-top:calc(25px + env(safe-area-inset-top))}}
+@media(display-mode:standalone){.app{padding-top:max(76px,calc(25px + env(safe-area-inset-top)))}}
+@media(max-width:430px){.top{gap:8px}.brand{font-size:26px}.pill{font-size:10px;white-space:nowrap;padding:8px}}
+.link-note{color:#b5f35c;font-size:12px;margin-top:5px}.deduction-row{grid-template-columns:minmax(0,1.4fr) minmax(0,.85fr) 67px 67px 30px}.deduction-row .ded-link{grid-column:1/-1;font-size:12px;padding:9px;background:#202820;color:#d5e4d0}.deduction-row .ded-link-label{grid-column:1/-1;font-size:11px;color:#9fab9c}.deduction-row .ded-name{min-width:0}
+
+/* MONO 0.7 — earmarked money & obligations */
+.liquidity-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px}.liquidity-card{background:#1D211D;border:1px solid #394238;border-radius:19px;padding:15px}.liquidity-card .currency-title{font-weight:750;color:#B5F35C;letter-spacing:.8px;font-size:12px}.liquidity-card .free-number{font-size:23px;font-weight:800;letter-spacing:-.6px;margin:7px 0 11px;overflow-wrap:anywhere}.liquidity-line{display:flex;justify-content:space-between;gap:8px;color:#B3C0B3;font-size:12px;margin:6px 0}.liquidity-line strong{color:#F2F5EF;text-align:right}.liquidity-warning{border:1px solid #70544D;background:#332721;color:#FFBEA7;padding:11px 12px;border-radius:13px;font-size:12px;margin-top:9px;line-height:1.5}.reserve-row{padding:15px 0;border-bottom:1px solid #343C34}.reserve-row:last-child{border-bottom:0}.reserve-row .amount{font-weight:800;color:#B5F35C}.forecast-currency{border-bottom:1px solid #363C36;padding:12px 0}.forecast-currency:last-child{border-bottom:0}.forecast-status{font-size:12px;margin-top:8px;line-height:1.5}.forecast-status.ok{color:#B5F35C}.forecast-status.risk{color:#FFB4A4}.liquidity-grid.planning{margin-bottom:12px}.reserve-mini{font-size:11px;color:#AAB5A9}.forecast-heading{font-weight:750;margin-bottom:6px}.forecast-detail{display:flex;justify-content:space-between;gap:10px;font-size:12px;margin:7px 0;color:#AEB9AF}.forecast-detail strong{color:#F2F4EF;text-align:right}
+
+/* MONO 0.8: dated cash flow */
+.forecast-currency{padding:17px 0}.forecast-heading{font-size:16px;display:flex;justify-content:space-between;align-items:center}.forecast-flag{font-size:11px;font-weight:650;color:#aab6a7}.forecast-flag.risk{color:#ffafa0}.forecast-flag.ok{color:#b5f35c}.forecast-sub{font-size:12px;color:#a7b0a6;line-height:1.55;margin:8px 0}.forecast-status.neutral{color:#a7b0a6}.timeline-row{padding:15px 0;border-bottom:1px solid #353c35}.timeline-row:last-child{border-bottom:0}.timeline-name{font-weight:700;font-size:15px}.timeline-meta{font-size:12px;color:#a6afa6;margin-top:5px;line-height:1.5}.timeline-amount{font-weight:800;font-size:16px}.timeline-amount.risk{color:#ffafa0}.timeline-amount.ok{color:#b5f35c}.timeline-meter{height:6px;border-radius:7px;background:#363d36;margin:12px 0 6px;overflow:hidden}.timeline-meter>div{height:100%;background:#b5f35c;border-radius:7px}.hint-legacy{padding:15px;border-radius:17px;background:#222720;border:1px solid #3d4b39;margin:12px 0}.hint-legacy .notice{margin:5px 0 12px}.forecast-date{color:#b5f35c;font-weight:650}.forecast-status{line-height:1.6}.mini-action{font-size:12px;margin-top:8px}.timeline-row .actions{margin-top:9px}
+
+/* MONO 0.9 — unified recurring obligations */
+.bill09{padding:18px 0;border-bottom:1px solid #353b35}.bill09:last-child{border-bottom:0}.bill09-title{font-size:17px;font-weight:750}.bill09-sum{font-size:22px;font-weight:800;margin:8px 0}.bill09-meta{font-size:12px;color:#aeb7ad;line-height:1.65}.bill09-status{display:inline-flex;align-items:center;border-radius:8px;background:#2c332b;padding:4px 8px;color:#b5f35c;font-size:11px}.bill09-status.risk{color:#ffb2a5;background:#332824}.bill09 .actions{margin-top:13px}.bill09 .actions button{padding:9px 11px}.bill09-meter{height:7px;border-radius:7px;background:#343b34;margin:13px 0 8px;overflow:hidden}.bill09-meter div{height:100%;background:#b5f35c}.bill09-split{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.bill09-note{color:#a5aea6;font-size:12px;line-height:1.55;margin-top:8px}.legacy09{background:#242923;border:1px solid #3a4836;padding:15px;border-radius:16px;margin:12px 0}.legacy09 button{margin-top:8px}.goal09-empty{padding:14px 0;color:#aab4aa;font-size:13px}.bill09-paid{opacity:.75}.bill09-header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:6px}.bill09 .timeline-meta{line-height:1.5}.bill09 .actions button:disabled{opacity:.5}
+
+/* MONO 0.9.2 — unobtrusive smart entry */
+.smart-bill-box{margin-top:12px;padding:12px 13px;border-radius:14px;background:#222a20;border:1px solid #3b4937}
+.smart-bill-box label{display:block;margin-bottom:6px;color:#b5f35c;font-size:13px;font-weight:650}
+.smart-bill-box select{width:100%}
+.smart-entry-hint{color:#aeb8a8;font-size:12px;line-height:1.5;margin:9px 0 0}
+</style><style>
+#home .dashboard>div:nth-child(2){display:none}#home .dashboard{display:block}.mono-quick-entry{background:#1d211d;border:1px solid #394238;border-radius:18px;padding:15px;margin-bottom:16px}.mono-quick-entry form{display:flex;gap:8px;margin-top:10px}.mono-quick-entry input{flex:1;min-width:0}.mono-quick-entry .btn{white-space:nowrap;padding:10px}.mono-search{margin-bottom:10px}.mono-extra{margin:12px 0 4px;border:1px solid #363d36;border-radius:12px;padding:10px 12px}.mono-extra summary{color:#b5f35c;cursor:pointer;font-size:13px}.mono-fx-hint{font-size:12px;color:#b8c5b8;line-height:1.5;margin:9px 0}.mono-day-heading{font-size:12px;font-weight:700;color:#b5f35c;background:#242a24;border-radius:9px;padding:8px 10px;margin:12px 0 0}.mono-month-row{display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #343b34;padding:10px 0;font-size:13px}.mono-month-row:last-child{border:0}.mono-integrity-item{font-size:12px;padding:7px 0;border-bottom:1px solid #343b34;color:#f3cfaa}.mono-integrity-ok{color:#b5f35c;font-size:13px;margin-bottom:10px}@media(max-width:375px){.mono-quick-entry form{flex-wrap:wrap}.mono-quick-entry form button{width:100%}}
+</style><style>
+.mono-reconcile-entry{border-left:3px solid #b5f35c;padding-left:12px}
+.mono-reconcile-entry .right strong{color:#b5f35c}
+.mono-reconcile-entry .small{overflow-wrap:anywhere}
+#monoReconcileEditDialog .mono-reconcile-detail{padding:12px;border-radius:12px;background:#272d28;color:#c9d3c8;margin:12px 0;line-height:1.65}
+</style><style>
+/* MONO 1.1 — budget, preserving the existing dark/lime design */
+.mono-budget-controls{display:flex;gap:8px;align-items:center;margin-top:13px;flex-wrap:wrap}.mono-budget-controls input{width:auto;flex:1;min-width:155px}.mono-budget-intro{background:#1b231c;border-color:#354736}
+.mono-budget-total{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-bottom:10px}.mono-budget-total .card{margin-bottom:0;padding:15px}.mono-budget-value{font-size:21px;font-weight:750;letter-spacing:-.6px;margin:7px 0}.mono-budget-row{padding:13px 0;border-bottom:1px solid #343934}.mono-budget-row:last-child{border-bottom:0}.mono-budget-row-head{display:flex;align-items:center;justify-content:space-between;gap:9px}.mono-budget-row-name{font-size:14px;font-weight:650;overflow-wrap:anywhere}.mono-budget-amounts{font-size:12px;color:#b7c0b4;margin-top:6px}.mono-budget-bar{height:7px;background:#333b32;border-radius:9px;overflow:hidden;margin:9px 0 2px}.mono-budget-bar>div{height:100%;background:#b5f35c;border-radius:9px}.mono-budget-bar.over>div{background:#ff958a}.mono-budget-subtle{font-size:11px;color:#a2ada2;line-height:1.45}.mono-budget-actions{display:flex;gap:5px;margin-left:4px;flex-shrink:0}.mono-budget-actions .btn{padding:6px 9px}.mono-budget-monthnote{font-size:12px;color:#9aa99a;margin:7px 0 0}.mono-budget-bills-row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #323a32;font-size:13px}.mono-budget-bills-row:last-child{border-bottom:0}
+@media(max-width:430px){.nav{gap:0;padding-left:5px;padding-right:5px}.nav button{font-size:9px;padding:6px 0;letter-spacing:-.2px}.nav .add-action{flex:0 0 53px;margin-left:2px;margin-right:2px}.mono-budget-total .card{padding:12px}.mono-budget-value{font-size:19px}}
+
+/* MONO 1.1.2 — iPhone compact layout, safe fixed nav, independent multi-currency planner */
+html,body{max-width:100%;overflow-x:hidden}
+.app{min-width:0;padding-bottom:calc(135px + env(safe-area-inset-bottom))}
+.nav{box-sizing:border-box;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(68px,1.15fr) minmax(0,.85fr) minmax(0,.85fr) minmax(0,1.1fr);gap:2px;align-items:end;justify-items:stretch;padding:8px max(8px,env(safe-area-inset-left)) calc(9px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-right));width:100%;max-width:100vw;background:#111411f5;border-top:1px solid #323c31}
+.nav button{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;min-width:0!important;width:100%;min-height:57px;padding:8px 1px!important;border-radius:15px;white-space:nowrap;overflow:visible;font-size:clamp(9px,2.6vw,12px)!important;letter-spacing:0!important;line-height:1.15}
+.nav button .nav-symbol{display:block;font-size:21px;line-height:1;font-weight:500}
+.nav button .nav-label{display:block;max-width:100%;letter-spacing:-.3px}
+.nav .add-action{min-width:0!important;flex:auto!important;margin:-15px 1px 0!important;min-height:73px;background:#b5f35c;color:#172111;border-radius:19px;box-shadow:0 5px 20px #b5f35219;font-weight:800}
+.nav .add-action .nav-symbol{font-size:30px;font-weight:750}
+.nav .add-action .nav-label{font-size:clamp(10px,2.85vw,13px)}
+.mono-budget-controls{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px;align-items:center}
+.mono-budget-controls input{min-width:0;width:100%;font-size:15px;min-height:52px;padding:10px 12px}
+.mono-budget-controls button{min-width:0;max-width:145px;white-space:normal;line-height:1.25;text-align:center;padding:10px 12px}
+.mono-budget-intro .eyebrow{font-size:10px;letter-spacing:1px;line-height:1.5;overflow-wrap:anywhere}
+.mono-planner-currency-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:24px 0 10px}
+.mono-planner-currency-head strong{font-size:17px}
+.mono-planner-currency-head select{width:auto;min-width:95px;padding:10px 12px}
+.mono-planner-chart-layout{display:flex;flex-direction:column;align-items:stretch;gap:16px}
+.mono-planner-donut{width:156px;height:156px;flex:0 0 156px;align-self:center}
+.mono-planner-legends{width:100%;min-width:0;flex:auto}
+.mono-planner-legend{display:grid;grid-template-columns:10px minmax(0,1fr) auto;gap:9px;align-items:center;padding:9px 0;font-size:13px;min-width:0}
+.mono-planner-legend>span:nth-child(2){min-width:0;overflow-wrap:anywhere}
+.mono-planner-legend>strong{font-size:12px;white-space:nowrap;text-align:right}
+.mono-planner-legend:has(>span:first-child:not(.mono-planner-dot)){grid-template-columns:minmax(0,1fr) auto}
+.mono-plan-summary{display:grid;grid-template-columns:1fr;gap:10px}
+.mono-plan-currency-card{background:#1f2220;border:1px solid #343b34;border-radius:20px;padding:15px 17px;min-width:0}
+.mono-plan-currency-figures{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}
+.mono-plan-currency-figures>div{min-width:0;display:flex;flex-direction:column;gap:6px}
+.mono-plan-currency-figures strong{font-size:clamp(13px,3.5vw,19px);overflow-wrap:anywhere;letter-spacing:-.5px}
+.mono-plan-add-hint{margin:0 0 12px}
+#budget .card{min-width:0;overflow-wrap:anywhere}
+#budget .section{gap:8px;align-items:center}
+#budget .section h2{min-width:0;font-size:clamp(18px,5vw,24px)}
+#budget .section .btn{flex-shrink:0}
+#budget .mono-budget-row-head{min-width:0}
+#budget .mono-budget-row-name{min-width:0;line-height:1.4}
+@media(max-width:370px){.nav{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(60px,1.1fr) minmax(0,.8fr) minmax(0,.8fr) minmax(0,1.1fr);padding-left:4px;padding-right:4px}.nav button{font-size:9px!important}.nav .add-action .nav-label{font-size:10px}.mono-budget-controls button{max-width:116px;font-size:11px}.mono-plan-currency-figures{gap:5px}}
+
+/* MONO 1.1.3 — isolated planner layout refinements */
+#budget .mono-budget-intro{padding:19px 18px 17px}
+#budget .mono-budget-controls{display:flex;flex-direction:column;align-items:stretch;gap:10px;width:100%;margin-top:16px}
+#budget .mono-budget-controls input[type="month"]{display:block;box-sizing:border-box;width:100%;max-width:100%;min-width:0;min-height:53px;flex:none;padding:12px 14px;text-align:center;font-size:16px;appearance:auto;-webkit-appearance:auto}
+#budget .mono-budget-controls button{display:block;box-sizing:border-box;width:100%;max-width:none;min-width:0;min-height:45px;flex:none;padding:12px 14px;white-space:normal;line-height:1.3;font-size:13px;border-radius:13px}
+#budget .mono-budget-intro .notice{margin-bottom:0;margin-top:15px}
+#budget .mono-plan-summary{display:grid;grid-template-columns:minmax(0,1fr);gap:11px}
+#budget .mono-plan-section{min-width:0}
+#budget .mono-plan-section-title{display:flex;align-items:center;gap:9px;font-size:15px;font-weight:750;margin:15px 0 9px;color:#e9efe6}
+#budget .mono-plan-section-title .mono-plan-mark{height:9px;width:9px;border-radius:50%;background:#b5f35c;flex:none}
+#budget .mono-plan-section-title.income .mono-plan-mark{background:#7fbca3}
+#budget .mono-plan-currency-card{padding:17px 15px;border-radius:18px}
+#budget .mono-plan-currency-figures{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+#budget .mono-plan-currency-figures strong{font-size:clamp(12px,3.45vw,18px);white-space:normal;overflow-wrap:anywhere}
+#budget .mono-plan-currency-figures .small{font-size:11px}
+#budget .mono-plan-income-card{background:linear-gradient(130deg,#1e2c27,#1d2420);border-color:#365448}
+#budget .mono-plan-income-card .eyebrow{color:#a5d6c0}
+#budget .mono-plan-dashboard-split{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+#budget .mono-plan-income-progress{height:9px;border-radius:10px;background:#344238;overflow:hidden;margin:11px 0 8px}
+#budget .mono-plan-income-progress>div{height:100%;border-radius:10px;background:#7fbca3}
+#budget .mono-plan-income-list{display:flex;flex-direction:column;gap:11px;margin-top:15px}
+#budget .mono-plan-income-item{border-top:1px solid #33443a;padding-top:12px}
+#budget .mono-plan-income-line{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;font-size:13px}
+#budget .mono-plan-income-line span{min-width:0;overflow-wrap:anywhere}
+#budget .mono-plan-income-line strong{white-space:nowrap}
+#budget .mono-plan-income-foot{font-size:11px;color:#9faea4;line-height:1.5;margin-top:5px}
+#budget .mono-planner-trend-title{font-size:15px;font-weight:750}
+@media(min-width:780px){#budget .mono-plan-summary{grid-template-columns:repeat(2,minmax(0,1fr))}#budget .mono-plan-dashboard-split{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:390px){#budget .mono-budget-intro{padding:16px 14px}#budget .mono-plan-currency-card{padding:14px 12px}}
+
+/* Currency converter 1.1.7 — isolated from financial ledger */
+.mono-currency-shell{background:#191d1a;border:1px solid #343c35;border-radius:24px;padding:18px;margin-top:12px}
+.mono-currency-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:17px 0}
+.mono-currency-tile{min-width:0;text-align:left;background:#232824;color:#f3f7f1;border:1px solid #3a423b;border-radius:16px;padding:12px 9px;overflow:hidden}
+.mono-currency-tile.active{background:#293a28;border-color:#b5f35c}
+.mono-currency-tile .fx-top{display:flex;justify-content:space-between;gap:3px;color:#bfcbbf;font-size:11px}
+.mono-currency-tile .fx-number{display:block;font-weight:750;font-size:clamp(13px,3.7vw,22px);letter-spacing:-.5px;margin:13px 0 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mono-currency-tile .fx-hint{font-size:10px;color:#9ba99a}
+.mono-currency-tile.active .fx-hint{color:#b5f35c}
+.mono-currency-entry{display:flex;align-items:center;gap:9px}
+.mono-currency-entry input{font-size:23px;font-weight:700;min-width:0;font-variant-numeric:tabular-nums}
+.mono-currency-entry strong{color:#b5f35c;padding:0 8px}
+.mono-currency-meta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:17px;color:#9eafa2;font-size:12px;line-height:1.6}
+.mono-currency-meta b{display:block;color:#f3f7f1;font-size:14px}
+.mono-currency-notice{font-size:11px;color:#9eafa2;line-height:1.5;margin:12px 0 0}
+</style></head><body><main class="app"><div class="top"><div class="brand">MON<span>O</span><div class="small muted" style="font-weight:400;letter-spacing:0">личные финансы</div></div><span class="pill">● Локально на iPhone</span></div>
+<section class="view active" id="home"><div class="mono-quick-entry"><div class="eyebrow">БЫСТРАЯ ЗАПИСЬ</div><form id="monoQuickForm" onsubmit="monoQuickSubmit(event)"><input id="monoQuickText" autocomplete="off" enterkeyhint="done" placeholder="15 лари продукты TBC" aria-label="Запиши операцию текстом"><button class="btn" type="submit">Разобрать →</button></form><div class="small muted" style="margin-top:7px">Проверишь поля перед сохранением · ничего не списывается автоматически</div></div><div class="home-bills"></div><div style="margin:12px 0"><button class="btn secondary" type="button" onclick="showView('converter');monoCurrencyOpen()" style="width:100%;text-align:left">⇄ Конвертер валют <span style="float:right">GEL · USD · RUB →</span></button></div><div class="quick-strip"><button onclick="quickTx('expense')">− Расход</button><button onclick="quickTx('income')">+ Доход</button><button onclick="quickTx('transfer')">⇄ Перевод</button></div><div class="hero"><div class="eyebrow">ТВОИ ДЕНЬГИ · ПО ВАЛЮТАМ</div><h1 id="heroValue">—</h1><p>Фактические остатки по твоим счетам</p></div><div class="section"><h2>Доступные деньги</h2><button class="btn tiny secondary" onclick="showView('planning')">Управлять →</button></div>
+<div class="liquidity-grid" id="liquidityHome"></div><p class="notice">Резерв — часть уже имеющихся денег. Не списывается со счёта. Валюты считаются отдельно.</p>
+<div class="section"><h2>Обзор месяца</h2><span class="muted small" id="monthTitle"></span></div><div class="grid"><div class="card"><div class="eyebrow">Доходы</div><div class="stat pos" id="incomeStat">—</div><div class="small muted">По валютам</div></div><div class="card"><div class="eyebrow">Расходы</div><div class="stat neg" id="expenseStat">—</div><div class="small muted">По валютам</div></div></div><div class="dashboard"><div><div class="section"><h2>Счета</h2><div><button class="btn tiny secondary" onclick="monoOpenReconcile()">Сверить</button> <button class="btn tiny secondary" onclick="openAccount()">+ Счёт</button></div></div><div class="accounts" id="homeAccounts"></div><div class="section"><h2>Последние операции</h2><button class="btn tiny secondary" onclick="showView('history')">Все</button></div><div class="card" id="recent"></div></div><div><div class="section"><h2>Цели накопления</h2><button class="btn tiny secondary" onclick="openGoal()">+ Цель</button></div><div class="card" id="homeGoals"></div><div class="section"><h2>Важно</h2></div><div class="alert">Ожидаемые деньги и авансы не прибавляются к балансу до фактического поступления. Резервы не являются расходами.</div></div></div></section>
+<section id="history" class="view"><div class="section"><h2>История операций</h2><button class="btn tiny" onclick="openTx()">+ Операция</button></div><div class="mono-search"><input id="monoHistorySearch" placeholder="Поиск: Spar, аренда, 100…" oninput="monoRenderHistory()" aria-label="Поиск по операциям"></div><div class="filters"><select id="filterType" onchange="render()"><option value="all">Все типы</option><option value="expense">Расходы</option><option value="income">Доходы</option><option value="transfer">Переводы и обмен</option></select><select id="filterAccount" onchange="render()"></select></div><div class="card" style="margin-top:12px" id="allTx"></div></section>
+<section id="accounts" class="view"><div class="section"><h2>Мои счета</h2><button class="btn tiny" onclick="openAccount()">+ Счёт</button></div><div class="accounts" id="allAccounts"></div><p class="notice">Начальные остатки задаются отдельно. Новые операции автоматически изменяют балансы. Переводы между собственными счетами не влияют на доходы и расходы.</p></section>
+<section id="planning" class="view"><div class="section"><h2>Свободно и зарезервировано</h2><button class="btn tiny" onclick="openReserve()">+ Резерв</button></div>
+<div id="liquidityPlanning"></div><div class="card" id="reserveList"></div><p class="notice">Резерв закреплён за конкретным счётом. Деньги остаются на счёте. При оплате связанного обязательства резерв уменьшается автоматически. Если расход затрагивает другой резерв, MONO спросит разрешение скорректировать его.</p>
+<div class="section"><h2>Прогноз по срокам</h2></div><div class="card" id="forecastPanel"></div><div class="section"><h2>Обязательные платежи</h2><button class="btn tiny secondary" onclick="openBill()">+ Платёж</button></div><div class="card" id="timelinePanel"></div><div id="legacyBillHint"></div><p class="notice">Прогноз по каждой валюте отдельно. В первой оценке — только деньги на счетах, во второй — ожидаемые выплаты с датой не позднее срока платежа. Выплата в тот же день не гарантирует своевременную оплату. Не учитываются будущие бытовые расходы и курсы обмена.</p><div class="section"><h2>Зарплата и авансы</h2><button class="btn tiny" onclick="openPaycheck()">+ Начисление</button></div><div class="card" id="payrollPanel"></div><p class="notice">Расчёт зарплаты — прогноз, а не деньги на счетах. Свяжи удержание «Аванс» с реальным поступлением, чтобы видеть подтверждение выплаты. Связь не создаёт новую операцию и не меняет остаток.</p><div id="billsPanel" hidden></div><div class="section"><h2>Цели и накопления</h2><button class="btn tiny" onclick="openGoal()">+ Добавить</button></div><div id="allGoals"></div><div id="legacyGoalsInfo"></div><p class="notice">Цели — для накоплений, а обязательные платежи — для аренды, коммуналки и счетов. Прогресс старых целей не резервирует реальные деньги. Используй «+ Резерв» для выделения денег со счёта.</p></section>
+<section id="budget" class="view">
+<div class="section"><h2>Планирование</h2></div>
+<div class="card mono-budget-intro"><div class="eyebrow">ЛИЧНАЯ ФИНАНСОВАЯ МОДЕЛЬ · БЕЗ ВЛИЯНИЯ НА СЧЕТА</div><div class="mono-budget-controls"><input id="monoBudgetMonth" type="month" aria-label="Месяц бюджета" onchange="monoBudgetChangeMonth()"><button class="btn tiny secondary" onclick="monoBudgetCopyPrev()">Копировать прошлый</button></div><p class="notice">Этот раздел не меняет счета, операции, резервы, обязательства или зарплату. План хранится отдельно; реальные операции используются только для сравнения.</p></div>
+<div id="monoBudgetSummary"></div><div class="mono-planner-currency-head"><strong>Структура бюджета</strong><select id="monoPlannerCurrency" aria-label="Валюта диаграммы" onchange="monoPlannerChart()"><option value="GEL">GEL</option><option value="USD">USD</option><option value="RUB">RUB</option><option value="USDT">USDT</option><option value="EUR">EUR</option></select></div><div id="monoPlannerDashboard"></div>
+<div class="section"><h2>Расходы по категориям</h2><button class="btn tiny secondary" onclick="monoBudgetOpen('expense')">+ Статья</button></div>
+<p class="notice mono-plan-add-hint">Добавляй любые статьи и валюты, например «Аренда квартиры» — 800 USD. Это только план, без списания.</p><div id="monoBudgetExpenses"></div>
+<div class="section"><h2>Цели по доходу</h2><button class="btn tiny secondary" onclick="monoBudgetOpen('income')">+ Источник</button></div>
+<div id="monoBudgetIncome"></div>
+<div class="section"><h2>Обязательные платежи · справочно</h2></div><div class="card" id="monoBudgetBills"></div><div class="card"><strong>Копия планов</strong><p class="notice">Бюджеты хранятся отдельно от финансовой базы. Для переноса на другое устройство экспортируй оба файла: финансовый JSON в «Аналитике» и план здесь.</p><div class="actions"><button class="btn tiny secondary" onclick="monoPlannerExport()">↓ Экспорт плана</button><button class="btn tiny secondary" onclick="document.getElementById('monoPlannerImportFile').click()">↑ Импорт плана</button><input type="file" id="monoPlannerImportFile" accept="application/json,.json" hidden onchange="monoPlannerImport(event)"></div></div>
+<div class="card"><strong>Общие правила семейного бюджета</strong><p class="notice">Передачу денег другому человеку учитывай один раз. Если деньги уже списаны с твоего счёта как расход, последующие покупки получателя не нужно повторно записывать в твою базу. Переводы между собственными счетами учитывай как переводы, а не расходы.</p></div>
+</section>
+<section id="converter" class="view"><div class="section"><h2>Конвертер валют</h2><button type="button" class="btn tiny secondary" onclick="monoCurrencyRefresh(true)">↻ Курс</button></div>
+<div class="mono-currency-shell"><div class="eyebrow">TBC · GEL / USD · RUB</div><div class="mono-currency-grid" id="monoCurrencyCards"><button class="mono-currency-tile" type="button">Загрузка…</button></div>
+<label for="monoCurrencyAmount">Введите сумму</label><div class="mono-currency-entry"><input id="monoCurrencyAmount" type="text" inputmode="decimal" autocomplete="off" aria-label="Сумма конвертации" value="100" oninput="monoCurrencyInput(this.value)"><strong id="monoCurrencyActive">GEL</strong></div>
+<div class="mono-currency-meta"><div>Покупка $1 в TBC<b>2,609 ₾</b></div><div>Продажа $1 в TBC<b>2,583 ₾</b></div><div>USD / RUB<b id="monoCurrencyRub">—</b></div></div>
+<p class="mono-currency-notice" id="monoCurrencyStatus" role="status">Проверяем справочный курс рубля…</p><p class="mono-currency-notice">Курсы TBC заданы вручную. Рубль — справочный рыночный курс, не курс обмена банка. Конвертер не изменяет счета, операции или бюджеты MONO.</p></div>
+<div style="margin-top:16px"><button class="btn secondary" type="button" onclick="showView('home')">← На главную</button></div></section>
+<section id="analytics" class="view"><div class="section"><h2>Аналитика</h2><button type="button" class="btn tiny secondary" onclick="showView('converter');monoCurrencyOpen()">⇄ Конвертер</button></div><div class="card"><h3>Расходы по категориям · текущий месяц</h3><div id="categoryChart"></div></div><div class="section"><h2>Сводка за месяц</h2></div><div class="card" id="monoMonthReport"></div><div class="section"><h2>Проверка данных</h2></div><div class="card"><div id="monoIntegrityReport"></div><button class="btn tiny secondary" onclick="monoRunIntegrity(true)">Проверить сейчас</button></div><details class="mono-extra" style="margin:20px 0"><summary>Как пользоваться MONO</summary><p class="notice">1. Записывай расход текстом: «15 лари Spar TBC», проверь форму и сохрани. Доход: «+100 GEL дизайн».</p><p class="notice">2. Перевод между своими счетами не является доходом. Для обмена валют MONO предложит рыночный ориентир; исправь сумму на фактически полученную.</p><p class="notice">3. Аренду и коммунальные добавляй в «Цели → Обязательные платежи». При записи соответствующего расхода привяжи его к платежу — второй расход создавать не нужно.</p><p class="notice">4. Резерв — часть денег на счёте, а не отдельный счёт и не расход. Для сверки используй «Сверить» рядом со счетами.</p><p class="notice">5. Перед обновлением и импортом экспортируй JSON в «Файлы» iPhone. Тестовые операции удаляй из истории после проверки связанных платежей.</p></details><div class="section"><h2>Управление данными</h2></div><div class="card"><p class="notice">Все данные хранятся в браузере этого устройства. Для защиты от потери данных регулярно экспортируй JSON-копию в «Файлы» (лучше в iCloud Drive). При очистке данных браузера записи могут исчезнуть.</p><p class="notice" id="storageStatus">Проверяем локальное хранилище…</p><div class="actions"><button class="btn secondary" onclick="exportData()">↓ Экспорт JSON</button><button class="btn secondary" onclick="document.getElementById('importFile').click()">↑ Импорт JSON</button><input type="file" id="importFile" accept="application/json,.json" hidden onchange="importData(event)"></div><button class="btn tiny secondary" onclick="monoRestorePreimport()" type="button">Вернуть базу до импорта</button><div class="small muted" id="monoBackupInfo" style="margin-top:10px"></div><div class="actions"><button class="btn danger tiny" onclick="resetData()">Сбросить все данные</button></div></div><div class="card"><div class="sectiontitle"><strong>Динамика за 6 месяцев</strong><select id="analyticsCurrency" onchange="buildInsights()"><option>GEL</option><option>USD</option><option>RUB</option><option>USDT</option></select></div><div id="monthlyBars" class="bars"></div><div class="small muted" id="monthlySummary"></div><div class="small muted">🟩 Доходы &nbsp; 🟪 Расходы · каждая валюта отдельно</div></div><div class="card"><div class="sectiontitle"><strong>Календарь операций</strong><div><button class="btn tiny secondary" onclick="changeCalendar(-1)">‹</button> <span id="calendarLabel"></span> <button class="btn tiny secondary" onclick="changeCalendar(1)">›</button></div></div><div class="calendar" id="calendarGrid"></div><div id="calendarDetail" class="small muted" style="margin-top:14px">Нажми на дату для просмотра операций</div></div></section></main>
+<nav class="nav" aria-label="Разделы MONO"><button data-view="home" class="active" onclick="showView('home')"><span class="nav-symbol">⌂</span><span class="nav-label">Главная</span></button><button data-view="history" onclick="showView('history')"><span class="nav-symbol">⇄</span><span class="nav-label">Операции</span></button><button onclick="openTx()" class="add-action"><span class="nav-symbol">⊕</span><span class="nav-label">Добавить</span></button><button data-view="planning" onclick="showView('planning')"><span class="nav-symbol">◎</span><span class="nav-label">Цели</span></button><button data-view="budget" onclick="showView('budget')"><span class="nav-symbol">▤</span><span class="nav-label">План</span></button><button data-view="analytics" onclick="showView('analytics')"><span class="nav-symbol">▥</span><span class="nav-label">Аналитика</span></button></nav>
+<dialog id="monoBudgetDialog"><h2 id="monoBudgetDialogTitle" style="margin-top:0">Статья бюджета</h2><form id="monoBudgetForm" onsubmit="monoBudgetSubmit(event)">
+<input type="hidden" id="monoBudgetEditId"><input type="hidden" id="monoBudgetKind">
+<label>Название статьи / источника</label><input id="monoBudgetName" maxlength="100" required placeholder="Продукты">
+<label>Плановая сумма</label><input id="monoBudgetAmount" type="number" min="0" max="1000000000" step="0.01" inputmode="decimal" required>
+<label>Валюта</label><select id="monoBudgetCurrency"><option>GEL</option><option>USD</option><option>RUB</option><option>USDT</option><option>EUR</option></select>
+<p class="notice" id="monoBudgetModalHint">Фактические расходы подтягиваются автоматически из операций.</p>
+<div class="actions"><button class="btn" type="submit">Сохранить</button><button class="btn secondary" type="button" onclick="monoBudgetDialog.close()">Отмена</button></div>
+</form></dialog>
+<dialog id="txDialog"><h2 style="margin-top:0">Новая операция</h2><form id="txForm"><label>Тип</label><select id="txType" onchange="txFields()"><option value="expense">Расход</option><option value="income">Доход</option><option value="transfer">Перевод / обмен</option></select><label>Счёт списания / получения</label><select id="txAccount" required></select><label>Сумма</label><input type="number" id="txAmount" step="0.01" min="0.01" required inputmode="decimal"><div id="transferFields" hidden><label>Счёт назначения</label><select id="txTo"></select><label>Сумма зачисления (в валюте счёта назначения)</label><input id="txReceived" type="number" min="0.01" step="0.01" inputmode="decimal"><div class="mono-fx-hint" id="monoFxHint" aria-live="polite">Выбери валюты и сумму — MONO предложит ориентировочный курс.</div><button class="btn tiny secondary" type="button" id="monoFxRefresh" onclick="monoRefreshFX(true)">↻ Обновить курс</button></div><div id="categoryFields"><label>Категория / источник</label><select id="txCategory"></select></div><details class="mono-extra"><summary>Дата и комментарий · необязательно</summary><label>Дата</label><input id="txDate" type="date" required><div id="monoExtraNote"><label>Комментарий</label><input id="txNote" placeholder="Например, аренда за октябрь"></div></details><div id="smartBillBox" class="smart-bill-box" hidden><label for="smartBillSelect">Связать с обязательством</label><select id="smartBillSelect"></select><div id="smartBillHint" class="small muted" style="margin-top:7px"></div></div><div id="smartEntryHint" class="smart-entry-hint" aria-live="polite"></div><div class="actions"><button class="btn" type="submit">Сохранить</button><button class="btn secondary" type="button" onclick="txDialog.close()">Отмена</button></div></form></dialog>
+<dialog id="accountDialog"><h2 style="margin-top:0">Добавить счёт</h2><form id="accountForm"><label>Название</label><input id="accName" required placeholder="Например, Bybit USDT"><label>Валюта</label><select id="accCurrency"><option>GEL</option><option>USD</option><option>RUB</option><option>USDT</option><option>EUR</option></select><label>Начальный остаток</label><input id="accOpening" type="number" step="0.01" value="0" required><p class="notice">Укажи реальный остаток на дату начала учёта. Это не доход.</p><div class="actions"><button class="btn" type="submit">Добавить</button><button class="btn secondary" type="button" onclick="accountDialog.close()">Отмена</button></div></form></dialog>
+<dialog id="goalDialog"><h2 style="margin-top:0">Обязательство / цель</h2><form id="goalForm"><label>Название</label><input id="goalName" required placeholder="Аренда квартиры"><label>Нужно собрать</label><input id="goalTarget" type="number" step="0.01" min="0.01" required><label>Валюта</label><select id="goalCurrency"><option>USD</option><option>GEL</option><option>RUB</option><option>USDT</option></select><label>Уже зарезервировано</label><input id="goalSaved" type="number" min="0" step="0.01" value="0" required><label>Срок</label><input id="goalDate" type="date"><div class="actions"><button class="btn" type="submit">Сохранить</button><button class="btn secondary" type="button" onclick="goalDialog.close()">Отмена</button></div></form></dialog>
+
+<dialog id="paycheckDialog"><form id="paycheckForm"><h2>Начисление зарплаты</h2><input type="hidden" id="payId"><label>Работодатель / проект</label><input id="payEmployer" required maxlength="100" placeholder="Название работодателя или проекта"><label>Расчётный месяц</label><input id="payMonth" type="month" required><label>Ожидаемая сумма</label><input id="payGross" type="number" min="0.01" step="0.01" required><label>Валюта</label><select id="payCurrency"><option>USD</option><option>GEL</option><option>RUB</option><option>USDT</option><option>EUR</option></select><label>Ожидаемая дата выплаты (необязательно)</label><input id="payDate" type="date"><label>Удержания / авансы</label><div id="deductionRows"></div><button type="button" class="btn secondary tiny" onclick="addDeduction()">+ Удержание</button><p class="notice">Удержания в другой валюте требуют ручного курса. Сумма удержания учитывается в валюте начисления только после конвертации.</p><label>Комментарий</label><textarea id="payNote" rows="2" maxlength="500"></textarea><div class="actions"><button type="submit" class="btn">Сохранить</button><button type="button" class="btn secondary" onclick="paycheckDialog.close()">Отмена</button></div></form></dialog>
+<dialog id="billDialog"><form id="billForm"><h2>Обязательный платёж</h2><input type="hidden" id="billId"><label>Название</label><input id="billName" required maxlength="100" placeholder="Аренда квартиры"><label>Сумма</label><input id="billAmount" type="number" min="0.01" step="0.01" required><label>Валюта</label><select id="billCurrency"><option>USD</option><option>GEL</option><option>RUB</option><option>USDT</option><option>EUR</option></select><label>Срок оплаты</label><input id="billDue" type="date" required><input type="hidden" id="billStatus" value="pending"><label>Повторять</label><select id="billRepeat"><option value="none">Не повторять</option><option value="monthly">Каждый месяц</option></select><p class="notice">Следующий месяц создаётся только после полной оплаты. Никаких новых расходов автоматически.</p><label>Комментарий</label><textarea id="billNote" rows="2" maxlength="500"></textarea><div class="actions"><button type="submit" class="btn">Сохранить</button><button type="button" class="btn secondary" onclick="billDialog.close()">Отмена</button></div></form></dialog>
+<dialog id="billPaymentDialog"><form id="billPaymentForm"><h2>Оплата обязательства</h2><input type="hidden" id="paymentBillId"><div class="notice" id="paymentBillInfo"></div><label>С какого счёта оплачено</label><select id="paymentAccount" required></select><label>Сумма фактической оплаты (введи вручную)</label><input id="paymentAmount" type="number" min="0.01" step="0.01" inputmode="decimal" required><p class="notice" id="paymentSafetyHint">Укажи только действительно уплаченную сумму. Полный долг не подставляется автоматически.</p><label>Дата фактической оплаты</label><input id="paymentDate" type="date" required><label>Комментарий</label><input id="paymentNote" maxlength="200" placeholder="Необязательно"><details class="link-existing"><summary>✓ Уже записал расход? Привязать без второго списания</summary><label>Выбери существующий расход</label><select id="paymentExisting"><option value="">Выбери операцию…</option></select><button type="button" class="btn tiny secondary" onclick="linkExistingBillExpense()">Связать существующий расход</button><p class="notice">Привязка не создаёт второй расход.</p></details><p class="notice">MONO создаст один реальный расход и привяжет его к платежу. Баланс уменьшится только на эту сумму. Резерв этого платежа уменьшится автоматически. Чужие резервы не изменяются без подтверждения.</p><div class="actions"><button type="submit" class="btn">Записать оплату</button><button type="button" class="btn secondary" onclick="billPaymentDialog.close()">Отмена</button></div></form></dialog><dialog id="reserveDialog"><form id="reserveForm"><h2 id="reserveDialogTitle">Новый резерв</h2><input type="hidden" id="reserveId"><label for="reserveName">Для чего резерв</label><input id="reserveName" maxlength="100" placeholder="Аренда, налоги, подушка" required><label for="reserveAccount">На каком счёте лежат деньги</label><select id="reserveAccount" required onchange="updateReserveHint()"></select><label for="reserveAmount">Сумма в валюте выбранного счёта</label><input id="reserveAmount" type="number" min="0.01" step="0.01" required inputmode="decimal" oninput="updateReserveHint()"><div class="notice" id="reserveHint"></div><label for="reserveBill">Связать с обязательным платежом (необязательно)</label><select id="reserveBill" onchange="updateReserveHint()"></select><label for="reserveNote">Комментарий</label><input id="reserveNote" maxlength="200" placeholder="Не тратить до конца месяца"><div class="actions"><button class="btn" type="submit">Сохранить резерв</button><button class="btn secondary" type="button" onclick="reserveDialog.close()">Отмена</button></div></form></dialog><dialog id="monoReconcileDialog"><h2>Сверка счёта</h2><form id="monoReconcileForm" onsubmit="monoReconcileSubmit(event)"><label>Счёт</label><select id="monoReconcileAccount" onchange="monoReconcileHint()"></select><label>Фактический остаток</label><input id="monoReconcileActual" type="number" step="0.01" inputmode="decimal" required><div id="monoReconcilePreview" class="notice" style="margin-top:12px"></div><label>Причина расхождения (необязательно)</label><input id="monoReconcileNote" placeholder="Например, пропущенная операция"><div class="actions"><button class="btn" type="submit">Сохранить сверку</button><button class="btn secondary" type="button" onclick="monoReconcileDialog.close()">Отмена</button></div></form></dialog><dialog id="monoReconcileEditDialog"><h2>Уточнить сверку</h2><div class="mono-reconcile-detail" id="monoReconcileEditInfo"></div><form id="monoReconcileEditForm" onsubmit="monoSaveReconcileNote(event)"><input type="hidden" id="monoReconcileEditId"><label for="monoReconcileEditNote">Что вызвало расхождение</label><textarea id="monoReconcileEditNote" rows="3" maxlength="500" placeholder="Например, комиссия банка или пропущенная покупка"></textarea><p class="notice">Комментарий можно изменить позже. Сверка не считается доходом или расходом.</p><div class="actions"><button class="btn" type="submit">Сохранить причину</button><button class="btn secondary" type="button" onclick="monoReconcileEditDialog.close()">Отмена</button></div><details class="mono-extra"><summary>Если нашлась пропущенная операция</summary><p class="notice">Сначала запиши реальный доход или расход, затем удали эту корректировку. Иначе сумма будет учтена дважды. Удаление сверки изменит баланс в обратную сторону.</p><button type="button" class="btn tiny secondary" onclick="monoDeleteReconcile()">Удалить корректировку</button></details></form></dialog><script>
+const KEY='mono.finance.v1';const today=()=>new Date().toLocaleDateString('en-CA');const uid=()=>crypto.randomUUID?crypto.randomUUID():String(Date.now()+Math.random());const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const fmt=(n,c)=>new Intl.NumberFormat('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:2}).format(n)+' '+({GEL:'₾',USD:'$',RUB:'₽',USDT:'USDT',EUR:'€'}[c]||c);const categories={expense:['Продукты','Аренда','Кафе и рестораны','Табак','Транспорт','Коты','Связь','Коммунальные','Здоровье','Покупки','Личные расходы семьи','Бизнес-расходы','Другое'],income:['Зарплата','Аванс зарплаты','Дизайн','Фриланс','Подработка','Бизнес','Возврат','Другое']};
+function defaults(){return {accounts:[],tx:[],goals:[]}}let state;try{state=JSON.parse(localStorage.getItem(KEY))||defaults();if(!Array.isArray(state.accounts)||!Array.isArray(state.tx)||!Array.isArray(state.goals))throw Error()}catch(e){state=defaults()}
+// Only clean the untouched 1.1.4 demo financial defaults. Never reset a user's real ledger.
+try{
+ const oldIds=['tbcgel','tbcusd','cashgel','cashusd','sber'];
+ const untouched=state.tx.length===0&&state.accounts.length===5&&oldIds.every((id,i)=>state.accounts[i].id===id&&Number(state.accounts[i].opening)===0)&&state.goals.length===1&&state.goals[0].name==='Аренда квартиры'&&Number(state.goals[0].target)===800&&(!state.bills||state.bills.length===0)&&(!state.payroll||state.payroll.length===0)&&(!state.reservations||state.reservations.length===0);
+ if(untouched){localStorage.setItem('mono.finance.legacy-demo-backup.v1',JSON.stringify(state));state=defaults();localStorage.setItem(KEY,JSON.stringify(state));}
+}catch(e){console.warn('Legacy demo cleanup skipped',e)}function save(){try{validateBackup({format:'mono-finance-v1',data:state});localStorage.setItem(KEY,JSON.stringify(state))}catch(e){alert("Не удалось сохранить данные. Экспортируй резервную копию: "+e.message);return}render();mirrorToIDB()}function balance(id){let a=state.accounts.find(a=>a.id===id);if(!a)return 0;return +(Number(a.opening)+state.tx.reduce((v,t)=>v+(t.type==='income'&&t.account===id?t.amount:0)-(t.type==='expense'&&t.account===id?t.amount:0)-(t.type==='transfer'&&t.account===id?t.amount:0)+(t.type==='transfer'&&t.to===id?t.received:0),0)).toFixed(2)}function grouped(items){let m={};items.forEach(({amount,currency})=>m[currency]=(m[currency]||0)+Number(amount));return Object.entries(m).map(([c,v])=>fmt(v,c)).join(' · ')||'0'}function showView(v){document.querySelectorAll('.view').forEach(x=>x.classList.toggle('active',x.id===v));document.querySelectorAll('.nav button[data-view]').forEach(x=>x.classList.toggle('active',x.dataset.view===v));window.scrollTo(0,0);render()}function txHTML(t){let a=state.accounts.find(a=>a.id===t.account),b=state.accounts.find(a=>a.id===t.to);let text=t.type==='transfer'?'Перевод / обмен':t.category;let amt=t.type==='transfer'?fmt(t.amount,a?.currency)+' → '+fmt(t.received,b?.currency):fmt(t.amount,a?.currency);return `<div class="item"><div><strong>${esc(text)}</strong><div class="small muted">${esc(t.date)} · ${esc(a?.name||'Удалённый счёт')}${t.type==='transfer'?' → '+esc(b?.name||''):''}</div>${t.note?`<div class="small muted">${esc(t.note)}</div>`:''}</div><div class="right"><strong class="${t.type==='income'?'pos':t.type==='expense'?'neg':''}">${t.type==='income'?'+':t.type==='expense'?'−':''}${esc(amt)}</strong><div><button class="btn tiny secondary" onclick="editTx('${t.id}')" aria-label="Редактировать операцию">✎</button> <button class="btn tiny secondary" onclick="deleteTx('${t.id}')" aria-label="Удалить операцию">×</button></div></div></div>`}function deleteTx(id){if(confirm('Удалить эту операцию?')){state.tx=state.tx.filter(t=>t.id!==id);save()}}function accountHTML(a){return `<div class="account"><div class="small muted">${esc(a.name)}</div><strong>${esc(fmt(balance(a.id),a.currency))}</strong><div class="small muted">${esc(a.currency)}</div></div>`}function goalHTML(g){let pct=Math.min(100,Math.max(0,100*g.saved/g.target));return `<div class="item" style="display:block"><div style="display:flex;justify-content:space-between;gap:10px"><strong>${esc(g.name)}</strong><span class="small muted">${esc(g.date||'Без срока')}</span></div><div class="small muted" style="margin-top:7px">${esc(fmt(g.saved,g.currency))} из ${esc(fmt(g.target,g.currency))}</div><div class="progress"><div style="width:${pct}%"></div></div><div class="actions"><button class="btn tiny secondary" onclick="editGoal('${g.id}')">Изменить прогресс</button><button class="btn tiny secondary" onclick="deleteGoal('${g.id}')">Удалить</button></div></div>`}function render(){let month=today().slice(0,7);document.getElementById('monthTitle').textContent=new Date().toLocaleDateString('ru-RU',{month:'long',year:'numeric'});let balances=state.accounts.map(a=>({amount:balance(a.id),currency:a.currency}));document.getElementById('heroValue').textContent=grouped(balances);let monthTx=state.tx.filter(t=>t.date.slice(0,7)===month);document.getElementById('incomeStat').textContent=grouped(monthTx.filter(t=>t.type==='income').map(t=>({amount:t.amount,currency:state.accounts.find(a=>a.id===t.account)?.currency})));document.getElementById('expenseStat').textContent=grouped(monthTx.filter(t=>t.type==='expense').map(t=>({amount:t.amount,currency:state.accounts.find(a=>a.id===t.account)?.currency})));document.getElementById('homeAccounts').innerHTML=state.accounts.map(accountHTML).join('');document.getElementById('allAccounts').innerHTML=state.accounts.map(accountHTML).join('');let sorted=[...state.tx].sort((a,b)=>b.date.localeCompare(a.date)||b.created-a.created);document.getElementById('recent').innerHTML=sorted.slice(0,5).map(txHTML).join('')||'<div class="empty">Операций пока нет. Добавь первое поступление или расход.</div>';document.getElementById('homeGoals').innerHTML=state.goals.slice(0,3).map(goalHTML).join('')||'<div class="empty">Целей пока нет.</div>';document.getElementById('allGoals').innerHTML=state.goals.map(g=>`<div class="card" style="margin-bottom:12px">${goalHTML(g)}</div>`).join('')||'<div class="empty">Добавь первую цель.</div>';let f=document.getElementById('filterAccount'),old=f.value;f.innerHTML='<option value="all">Все счета</option>'+state.accounts.map(a=>`<option value="${a.id}">${esc(a.name)}</option>`).join('');f.value=[...f.options].some(x=>x.value===old)?old:'all';let type=document.getElementById('filterType').value;document.getElementById('allTx').innerHTML=sorted.filter(t=>(type==='all'||t.type===type)&&(f.value==='all'||t.account===f.value||t.to===f.value)).map(txHTML).join('')||'<div class="empty">По выбранным фильтрам операций нет.</div>';let cats={};monthTx.filter(t=>t.type==='expense').forEach(t=>{let c=state.accounts.find(a=>a.id===t.account)?.currency||'?';let k=t.category+' · '+c;cats[k]=(cats[k]||0)+t.amount});let mx=Math.max(0,...Object.values(cats));document.getElementById('categoryChart').innerHTML=Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="small">${esc(k)} <strong style="float:right">${v.toFixed(2)}</strong></div><div class="chartline"><div style="width:${mx?100*v/mx:0}%"></div></div>`).join('')||'<div class="empty">Расходов в этом месяце пока нет.</div>'}
+function openTx(){txForm.dataset.edit="";txForm.reset();txDate.value=today();txAccount.innerHTML=state.accounts.map(a=>`<option value="${a.id}">${esc(a.name)} (${a.currency})</option>`).join('');txTo.innerHTML=txAccount.innerHTML;txFields();txDialog.showModal()}function txFields(){let tr=txType.value==='transfer';transferFields.hidden=!tr;categoryFields.hidden=tr;txReceived.required=tr;txCategory.innerHTML=(categories[txType.value]||[]).map(c=>`<option>${esc(c)}</option>`).join('')}txForm.onsubmit=e=>{e.preventDefault();let type=txType.value,account=txAccount.value,amount=Number(txAmount.value),to=txTo.value,received=Number(txReceived.value);if(!Number.isFinite(amount)||amount<=0)return alert('Сумма должна быть больше нуля.');if(type==='transfer'&&account===to)return alert('Выбери разные счета.');if(type==='transfer'&&!(received>0))return alert('Укажи сумму зачисления.');let old=state.tx.find(t=>t.id===txForm.dataset.edit);let item={id:old?.id||uid(),created:old?.created||Date.now(),date:txDate.value,type,account,amount,...(type==='transfer'?{to,received}:{category:txCategory.value}),note:txNote.value.trim()};if(old)state.tx=state.tx.map(t=>t.id===old.id?item:t);else state.tx.push(item);save();txDialog.close()};function openAccount(){accountForm.reset();accountDialog.showModal()}accountForm.onsubmit=e=>{e.preventDefault();state.accounts.push({id:uid(),name:accName.value.trim(),currency:accCurrency.value,opening:Number(accOpening.value)});save();accountDialog.close()};function openGoal(){goalForm.reset();goalForm.dataset.edit='';goalSaved.value=0;goalDialog.showModal()}function editGoal(id){let g=state.goals.find(g=>g.id===id);if(!g)return;goalForm.dataset.edit=id;goalName.value=g.name;goalTarget.value=g.target;goalCurrency.value=g.currency;goalSaved.value=g.saved;goalDate.value=g.date||'';goalDialog.showModal()}goalForm.onsubmit=e=>{e.preventDefault();let id=goalForm.dataset.edit;let g={id:id||uid(),name:goalName.value.trim(),target:Number(goalTarget.value),currency:goalCurrency.value,saved:Number(goalSaved.value),date:goalDate.value};if(!Number.isFinite(g.target)||g.target<=0||!Number.isFinite(g.saved)||g.saved<0)return alert('Проверь сумму цели и резерва.');if(g.saved>g.target)return alert('Резерв не может превышать цель.');if(id)state.goals=state.goals.map(x=>x.id===id?g:x);else state.goals.push(g);save();goalDialog.close()};function deleteGoal(id){if(confirm('Удалить цель?')){state.goals=state.goals.filter(g=>g.id!==id);save()}}function exportData(){let blob=new Blob([JSON.stringify({format:'mono-finance-v1',exportedAt:new Date().toISOString(),data:state},null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='mono-backup-'+today()+'-'+Date.now()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}async function importData(e){let f=e.target.files[0];if(!f)return;try{let obj=JSON.parse(await f.text());validateBackup(obj);if(confirm('Заменить текущие данные содержимым резервной копии?')){state=obj.data;initPlanning();save()}}catch(err){alert('Не удалось импортировать: '+err.message)}e.target.value=''}function resetData(){if(prompt('Для удаления всех данных введи СБРОС')==='СБРОС'){state=defaults();initPlanning();save()}}
+
+function validateBackup(obj){
+ if(!obj||obj.format!=='mono-finance-v1'||!obj.data)throw Error('Неизвестный формат копии');
+ const d=obj.data;
+ if(!Array.isArray(d.accounts)||!Array.isArray(d.tx)||!Array.isArray(d.goals))throw Error('Повреждена структура копии');
+ if(d.accounts.length>500||d.tx.length>100000||d.goals.length>500)throw Error('Недопустимый размер копии');
+ const ids=new Set();
+ for(const a of d.accounts){
+  if(!a||typeof a.id!=='string'||!a.id||ids.has(a.id)||typeof a.name!=='string'||!['GEL','USD','RUB','USDT','EUR'].includes(a.currency)||!Number.isFinite(Number(a.opening)))throw Error('Некорректный счёт');
+  ids.add(a.id);
+ }
+ for(const t of d.tx){
+  if(!t||typeof t.id!=='string'||!['income','expense','transfer'].includes(t.type)||!ids.has(t.account)||!/^\d{4}-\d{2}-\d{2}$/.test(t.date)||!Number.isFinite(Number(t.amount))||Number(t.amount)<=0)throw Error('Некорректная операция');
+  if(t.type==='transfer'&&(!ids.has(t.to)||t.to===t.account||!Number.isFinite(Number(t.received))||Number(t.received)<=0))throw Error('Некорректный перевод');
+ }
+ for(const g of d.goals){
+  if(!g||typeof g.name!=='string'||!['GEL','USD','RUB','USDT','EUR'].includes(g.currency)||!Number.isFinite(Number(g.target))||Number(g.target)<=0||!Number.isFinite(Number(g.saved))||Number(g.saved)<0)throw Error('Некорректная цель');
+ }
+ if(d.payroll!==undefined){if(!Array.isArray(d.payroll)||d.payroll.length>2000)throw Error('Некорректные начисления');for(const p of d.payroll){if(!p||typeof p.id!=='string'||typeof p.employer!=='string'||!['GEL','USD','RUB','USDT','EUR'].includes(p.currency)||!Number.isFinite(Number(p.gross))||Number(p.gross)<=0||!Array.isArray(p.deductions))throw Error('Некорректное начисление');for(const x of p.deductions){if(!x||!Number.isFinite(Number(x.amount))||Number(x.amount)<0||!Number.isFinite(Number(x.rate))||Number(x.rate)<=0)throw Error('Некорректное удержание')}}}
+ if(d.reservations!==undefined){
+  if(!Array.isArray(d.reservations)||d.reservations.length>5000)throw Error('Некорректные резервы');
+  const rids=new Set();
+  for(const r of d.reservations){
+   if(!r||typeof r.id!=='string'||!r.id||rids.has(r.id)||typeof r.name!=='string'||!r.name.trim()||!ids.has(r.accountId)||!Number.isFinite(Number(r.amount))||Number(r.amount)<=0)throw Error('Некорректный резерв');
+   if(r.billId!==undefined&&r.billId!==''&&(!Array.isArray(d.bills)||!d.bills.some(b=>b.id===r.billId)))throw Error('Резерв связан с несуществующим платежом');
+   rids.add(r.id);
+  }
+ }
+ if(d.bills!==undefined){if(!Array.isArray(d.bills)||d.bills.length>5000)throw Error('Некорректные обязательства');for(const b of d.bills){if(!b||typeof b.id!=='string'||typeof b.name!=='string'||!['GEL','USD','RUB','USDT','EUR'].includes(b.currency)||!Number.isFinite(Number(b.amount))||Number(b.amount)<=0||!['pending','paid'].includes(b.status))throw Error('Некорректное обязательство')}}
+ if(d.bills?.some(b=>b.repeat!==undefined&&!['none','monthly'].includes(b.repeat)))throw Error('Некорректная периодичность платежа');for(const t of d.tx){if(t.billId!==undefined&&(!d.bills?.some(b=>b.id===t.billId)||t.type!=='expense'||d.accounts.find(a=>a.id===t.account)?.currency!==d.bills.find(b=>b.id===t.billId)?.currency))throw Error('Некорректная привязка оплаты')}
+ return true;
+}
+function quickTx(type){
+ openTx();txType.value=type;txFields();txAmount.focus();
+}
+
+function editTx(id){let t=state.tx.find(x=>x.id===id);if(!t)return;openTx();txForm.dataset.edit=id;txType.value=t.type;txFields();txDate.value=t.date;txAccount.value=t.account;txAmount.value=t.amount;if(t.type==='transfer'){txTo.value=t.to;txReceived.value=t.received}else{if(![...txCategory.options].some(o=>o.value===t.category)){txCategory.add(new Option(t.category,t.category))}txCategory.value=t.category}txNote.value=t.note||''}
+function buildInsights(){let month=today().slice(0,7),months=[];for(let i=5;i>=0;i--){let d=new Date();d.setDate(1);d.setMonth(d.getMonth()-i);months.push(d.toLocaleDateString('en-CA').slice(0,7))}let cur=document.getElementById('analyticsCurrency').value;let rows=months.map(m=>{let tx=state.tx.filter(t=>t.date.slice(0,7)===m&&state.accounts.find(a=>a.id===t.account)?.currency===cur);return {m,inc:tx.filter(t=>t.type==='income').reduce((a,t)=>a+t.amount,0),out:tx.filter(t=>t.type==='expense').reduce((a,t)=>a+t.amount,0)}});let max=Math.max(1,...rows.flatMap(r=>[r.inc,r.out]));document.getElementById('monthlyBars').innerHTML=rows.map(r=>`<div class="barcol"><div class="barpair"><div class="bar income" style="height:${Math.max(2,r.inc/max*115)}px" title="Доход: ${r.inc}"></div><div class="bar expense" style="height:${Math.max(2,r.out/max*115)}px" title="Расход: ${r.out}"></div></div><span>${esc(r.m.slice(5))}</span></div>`).join('');let m=rows.at(-1);document.getElementById('monthlySummary').textContent=`${fmt(m.inc,cur)} получено · ${fmt(m.out,cur)} потрачено`;buildCalendar()}
+let calOffset=0;function changeCalendar(delta){calOffset+=delta;buildCalendar()}function buildCalendar(){let base=new Date();base.setDate(1);base.setMonth(base.getMonth()+calOffset);let year=base.getFullYear(),month=base.getMonth(),start=(base.getDay()+6)%7,days=new Date(year,month+1,0).getDate(),cur=document.getElementById('analyticsCurrency').value;document.getElementById('calendarLabel').textContent=base.toLocaleDateString('ru-RU',{month:'long',year:'numeric'});let cells=['Пн','Вт','Ср','Чт','Пт','Сб','Вс'].map(d=>`<div class="calweek">${d}</div>`);for(let i=0;i<start;i++)cells.push('<div></div>');for(let d=1;d<=days;d++){let date=`${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`,ts=state.tx.filter(t=>t.date===date&&state.accounts.find(a=>a.id===t.account)?.currency===cur),expense=ts.filter(t=>t.type==='expense').reduce((a,t)=>a+t.amount,0),income=ts.filter(t=>t.type==='income').reduce((a,t)=>a+t.amount,0);cells.push(`<button class="calday ${date===today()?'today':''}" onclick="calendarDay('${date}')"><span>${d}</span>${expense?`<small class="neg">−${Math.round(expense)}</small>`:income?`<small class="pos">+${Math.round(income)}</small>`:'<small>·</small>'}</button>`)}document.getElementById('calendarGrid').innerHTML=cells.join('')}
+function calendarDay(date){let cur=document.getElementById('analyticsCurrency').value,tx=state.tx.filter(t=>t.date===date&&state.accounts.find(a=>a.id===t.account)?.currency===cur);document.getElementById('calendarDetail').innerHTML=`<strong>${date}</strong>`+(tx.length?tx.map(txHTML).join(''):'<p class="muted small">Нет операций в выбранной валюте.</p>')}
+
+const MONO_DB='mono.finance.storage';
+function openMonoDB(){
+ return new Promise((resolve,reject)=>{
+  if(!('indexedDB' in window))return reject(Error('IndexedDB недоступна'));
+  const req=indexedDB.open(MONO_DB,1);
+  req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains('snapshots'))req.result.createObjectStore('snapshots')};
+  req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);
+ });
+}
+async function mirrorToIDB(){
+ try{
+  const db=await openMonoDB();
+  await new Promise((resolve,reject)=>{
+   const tr=db.transaction('snapshots','readwrite');
+   tr.objectStore('snapshots').put({data:state,savedAt:new Date().toISOString()},'latest');
+   tr.oncomplete=resolve;tr.onerror=()=>reject(tr.error);
+  });
+  db.close();
+  setStorageStatus('Локально сохранено · резервная копия рекомендуется');
+ }catch(e){setStorageStatus('Сохранено в браузере · экспортируй резервную копию');}
+}
+function setStorageStatus(s){const el=document.getElementById('storageStatus');if(el)el.textContent=s;}
+async function recoverFromIDB(){
+ try{
+  const db=await openMonoDB();
+  const snapshot=await new Promise((resolve,reject)=>{
+   const tr=db.transaction('snapshots','readonly'),req=tr.objectStore('snapshots').get('latest');
+   req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);
+  });db.close();
+  if(snapshot&&snapshot.data){
+   validateBackup({format:'mono-finance-v1',data:snapshot.data});
+   const raw=localStorage.getItem(KEY);
+   if(!raw){state=snapshot.data;localStorage.setItem(KEY,JSON.stringify(state));render();setStorageStatus('Данные восстановлены из локальной копии');return;}
+   // localStorage is canonical when present; mirror it to IDB
+  }
+  await mirrorToIDB();
+ }catch(e){setStorageStatus('Хранилище браузера · делай экспорт JSON');}
+}
+if('serviceWorker' in navigator&&location.protocol==='https:'){
+ window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+}
+
+
+// MONO 0.5: informational obligations and payroll. Existing finance state is preserved.
+function initPlanning(){if(!Array.isArray(state.payroll))state.payroll=[];if(!Array.isArray(state.bills))state.bills=[]}
+initPlanning();
+function dedTotal(p){return p.deductions.reduce((n,d)=>n+Number(d.amount)*Number(d.rate),0)}
+function renderPlanning(){initPlanning();const el=document.getElementById('payrollPanel');if(el)el.innerHTML=state.payroll.length?state.payroll.slice().sort((a,b)=>b.month.localeCompare(a.month)).map(p=>{const net=p.gross-dedTotal(p);return `<div class="plan-item"><div class="plan-top"><strong>${esc(p.employer)} · ${esc(p.month)}</strong><span class="tag">${esc(p.currency)}</span></div><div class="plan-big">${esc(fmt(net,p.currency))} <span class="small muted">ожидается</span></div><div class="small muted">Начислено ${esc(fmt(p.gross,p.currency))} · удержания ${esc(fmt(dedTotal(p),p.currency))}${p.date?' · выплата '+esc(p.date):''}</div>${p.deductions.length?`<div class="plan-sub">${p.deductions.map(d=>`<div>− ${esc(d.name)}: ${esc(fmt(d.amount,d.currency))}${d.currency!==p.currency?' × '+esc(d.rate)+' '+esc(p.currency)+'/'+esc(d.currency):''}${d.linkedTxId?(state.tx.some(t=>t.id===d.linkedTxId)?' <span class="link-note">✓ поступление связано</span>':' <span class="neg">⚠ операция не найдена</span>'):''}</div>`).join('')}</div>`:''}${p.note?`<p class="small muted">${esc(p.note)}</p>`:''}<div class="actions"><button class="btn tiny secondary" onclick="editPaycheck('${p.id}')">Изменить</button><button class="btn tiny secondary" onclick="removePaycheck('${p.id}')">Удалить</button></div></div>`}).join(''):'<div class="empty">Добавь первое начисление. Оно не изменит баланс.</div>';
+const bills=state.bills.slice().sort((a,b)=>(a.status==='paid')-(b.status==='paid')||a.due.localeCompare(b.due));const panel=document.getElementById('billsPanel');if(panel)panel.innerHTML=bills.length?bills.map(b=>`<div class="plan-item"><div class="plan-top"><strong>${esc(b.name)}</strong><span class="tag">${b.status==='paid'?'Оплачено':'К оплате'}</span></div><div class="plan-big">${esc(fmt(b.amount,b.currency))}</div><div class="small muted">До ${esc(b.due)}${b.note?' · '+esc(b.note):''}</div><div class="actions"><button class="btn tiny secondary" onclick="editBill('${b.id}')">Изменить</button><button class="btn tiny secondary" onclick="toggleBill('${b.id}')">${b.status==='paid'?'Вернуть в план':'Отметить оплачено'}</button><button class="btn tiny secondary" onclick="removeBill('${b.id}')">Удалить</button></details></div></div>`).join(''):'<div class="empty">Плановых платежей пока нет.</div>';
+const upcoming=bills.filter(b=>b.status==='pending').slice(0,2),h=document.getElementById('homeBills');if(h)h.innerHTML=upcoming.length?`<div class="home-bills-title">Ближайшие платежи <button class="btn tiny secondary" onclick="showView('planning')">Все →</button></div>`+upcoming.map(b=>`<div class="bill-teaser"><span>${esc(b.name)} <small>${esc(b.due)}</small></span><strong>${esc(fmt(b.amount,b.currency))}</strong></div>`).join(''):'';
+}
+function addDeduction(d={}){const row=document.createElement('div');row.className='deduction-row';row.innerHTML=`<input class="ded-name" aria-label="Название удержания" placeholder="Аванс / покупка" maxlength="100" value="${esc(d.name||'')}"><input class="ded-amount" aria-label="Сумма удержания" type="number" min="0" step="0.01" placeholder="Сумма" value="${d.amount??''}"><select class="ded-currency" aria-label="Валюта удержания">${['USD','GEL','RUB','USDT','EUR'].map(c=>`<option ${c===(d.currency||payCurrency.value)?'selected':''}>${c}</option>`).join('')}</select><input class="ded-rate" aria-label="Курс в валюту зарплаты" type="number" min="0.000001" step="any" placeholder="Курс" value="${d.rate??1}"><button type="button" class="btn tiny secondary" onclick="this.parentElement.remove()">×</button><span class="ded-link-label">Связать с уже полученным авансом (необязательно)</span><select class="ded-link" aria-label="Связанное поступление"><option value="">Не связано с операцией</option>${state.tx.filter(t=>t.type==='income').slice().sort((a,b)=>b.date.localeCompare(a.date)).map(t=>{const a=state.accounts.find(a=>a.id===t.account);return `<option value="${esc(t.id)}" ${d.linkedTxId===t.id?'selected':''}>${esc(t.date)} · ${esc(fmt(t.amount,a?.currency||''))} · ${esc(t.category||'Доход')} · ${esc(a?.name||'')}</option>`}).join('')}</select>`;deductionRows.appendChild(row)}
+function openPaycheck(){initPlanning();paycheckForm.reset();payId.value='';payMonth.value=today().slice(0,7);deductionRows.innerHTML='';paycheckDialog.showModal()}
+function editPaycheck(id){const p=state.payroll.find(x=>x.id===id);if(!p)return;openPaycheck();payId.value=p.id;payEmployer.value=p.employer;payMonth.value=p.month;payGross.value=p.gross;payCurrency.value=p.currency;payDate.value=p.date||'';payNote.value=p.note||'';p.deductions.forEach(addDeduction)}
+paycheckForm.onsubmit=e=>{e.preventDefault();const gross=Number(payGross.value),currency=payCurrency.value;if(!(gross>0))return alert('Проверь сумму начисления');let deductions=[];for(const row of deductionRows.children){const name=row.querySelector('.ded-name').value.trim(),amount=Number(row.querySelector('.ded-amount').value),cur=row.querySelector('.ded-currency').value,rate=Number(row.querySelector('.ded-rate').value);if(!name||!(amount>=0)||!Number.isFinite(amount)||!(rate>0)||!Number.isFinite(rate))return alert('Проверь удержания и курсы');if(cur!==currency&&rate===1&&!confirm('Курс 1 для разных валют. Ты уверен, что он верен?'))return;const linkedTxId=row.querySelector('.ded-link').value||undefined;if(linkedTxId){const tx=state.tx.find(t=>t.id===linkedTxId);const account=state.accounts.find(a=>a.id===tx?.account);if(!tx||tx.type!=='income'||account?.currency!==cur||Math.abs(tx.amount-amount)>.005)return alert('Связанный аванс должен совпадать по сумме и валюте с поступлением.');if(deductions.some(d=>d.linkedTxId===linkedTxId))return alert('Одна операция не может быть привязана дважды к одному начислению.');if(state.payroll.some(p=>p.id!==payId.value&&p.deductions.some(d=>d.linkedTxId===linkedTxId)))return alert('Эта операция уже привязана к другому начислению.')}deductions.push({name,amount,currency:cur,rate:cur===currency?1:rate,...(linkedTxId?{linkedTxId}:{})})}const p={id:payId.value||uid(),employer:payEmployer.value.trim(),month:payMonth.value,gross,currency,date:payDate.value,note:payNote.value.trim(),deductions};if(payId.value)state.payroll=state.payroll.map(x=>x.id===p.id?p:x);else state.payroll.push(p);save();paycheckDialog.close()};
+function removePaycheck(id){if(confirm('Удалить начисление?')){state.payroll=state.payroll.filter(x=>x.id!==id);save()}}
+function openBill(){initPlanning();billForm.reset();billId.value='';billDue.value=today();billDialog.showModal()}
+function editBill(id){const b=state.bills.find(x=>x.id===id);if(!b)return;openBill();billId.value=b.id;billName.value=b.name;billAmount.value=b.amount;billCurrency.value=b.currency;billDue.value=b.due;billStatus.value=b.status;billNote.value=b.note||''}
+billForm.onsubmit=e=>{e.preventDefault();const amount=Number(billAmount.value);if(!(amount>0)||!Number.isFinite(amount))return alert('Проверь сумму');const b={id:billId.value||uid(),name:billName.value.trim(),amount,currency:billCurrency.value,due:billDue.value,status:billStatus.value,note:billNote.value.trim()};if(billId.value)state.bills=state.bills.map(x=>x.id===b.id?b:x);else state.bills.push(b);save();billDialog.close()};
+function toggleBill(id){const b=state.bills.find(x=>x.id===id);if(b){if(b.status==='pending'&&state.reservations?.some(r=>r.billId===id)){if(!confirm('По платежу есть резерв. После оплаты освободи его вручную. Отметить платёж оплаченным?'))return}b.status=b.status==='paid'?'pending':'paid';save()}}
+function removeBill(id){if(state.reservations?.some(r=>r.billId===id))return alert('Сначала освободи или отвяжи резервы этого платежа.');if(confirm('Удалить обязательство?')){state.bills=state.bills.filter(x=>x.id!==id);save()}}
+
+
+// MONO 0.7 — reserves are labels on actual balances, not transactions.
+function initLiquidity(){if(!Array.isArray(state.reservations))state.reservations=[];initPlanning()}
+initLiquidity();
+const monoRound=n=>Math.round((Number(n)+Number.EPSILON)*100)/100;
+function reservedForAccount(accountId,excludingId=''){
+ return monoRound(state.reservations.filter(r=>r.accountId===accountId&&r.id!==excludingId).reduce((v,r)=>v+Number(r.amount),0));
+}
+function liquidityByCurrency(){
+ const result={};
+ for(const a of state.accounts){
+  const x=result[a.currency]||(result[a.currency]={currency:a.currency,total:0,reserved:0,accountWarnings:[]});
+  const bal=balance(a.id),reserved=reservedForAccount(a.id);
+  x.total+=bal;x.reserved+=reserved;
+  if(bal+0.005<reserved)x.accountWarnings.push(a.name+': резерв больше остатка на '+fmt(reserved-bal,a.currency));
+ }
+ return Object.values(result).map(x=>({...x,total:monoRound(x.total),reserved:monoRound(x.reserved),free:monoRound(x.total-x.reserved)}));
+}
+function liquidityCard(x){return `<div class="liquidity-card"><div class="currency-title">${esc(x.currency)}</div><div class="free-number ${x.free<0?'neg':'pos'}">${esc(fmt(x.free,x.currency))}</div><div class="liquidity-line"><span>На счетах</span><strong>${esc(fmt(x.total,x.currency))}</strong></div><div class="liquidity-line"><span>Резерв</span><strong>${esc(fmt(x.reserved,x.currency))}</strong></div>${x.accountWarnings.length?`<div class="liquidity-warning">⚠ ${esc(x.accountWarnings.join('; '))}<div><button class="btn tiny secondary" onclick="repairReservesForCurrency('${esc(x.currency)}')">Исправить резервы</button></div></div>`:''}</div>`}
+function openReserve(id=''){
+ initLiquidity();reserveForm.reset();reserveId.value=id;
+ const r=state.reservations.find(x=>x.id===id);
+ reserveDialogTitle.textContent=r?'Изменить резерв':'Новый резерв';
+ reserveAccount.innerHTML=state.accounts.map(a=>`<option value="${esc(a.id)}">${esc(a.name)} · ${esc(a.currency)}</option>`).join('');
+ if(r){reserveId.value=r.id;reserveName.value=r.name;reserveAccount.value=r.accountId;reserveAmount.value=r.amount;reserveNote.value=r.note||'';}
+ updateReserveHint();if(r&&r.billId)reserveBill.value=r.billId;
+ reserveDialog.showModal();
+}
+function updateReserveHint(){
+ const a=state.accounts.find(a=>a.id===reserveAccount.value);if(!a)return;
+ const available=monoRound(balance(a.id)-reservedForAccount(a.id,reserveId.value));
+ const v=Number(reserveAmount.value)||0;
+ reserveHint.textContent='Свободно для резерва на этом счёте: '+fmt(Math.max(0,available),a.currency)+(v>available+.005?' · Недостаточно денег для нового резерва':'');
+ const previous=reserveBill.value;
+ reserveBill.innerHTML='<option value="">Без связи с платежом</option>'+state.bills.filter(b=>b.status==='pending'&&b.currency===a.currency).map(b=>`<option value="${esc(b.id)}">${esc(b.name)} · ${esc(fmt(b.amount,b.currency))} · ${esc(b.due)}</option>`).join('');
+ if([...reserveBill.options].some(o=>o.value===previous))reserveBill.value=previous;
+}
+reserveForm.onsubmit=e=>{
+ e.preventDefault();initLiquidity();const a=state.accounts.find(a=>a.id===reserveAccount.value),amount=Number(reserveAmount.value),name=reserveName.value.trim(),billId=reserveBill.value||'';
+ if(!a||!name||!Number.isFinite(amount)||amount<=0)return alert('Укажи счёт, название и положительную сумму');
+ if(amount>balance(a.id)-reservedForAccount(a.id,reserveId.value)+.005)return alert('Недостаточно свободных денег на этом счёте. Резерв не создан.');
+ if(billId){const b=state.bills.find(b=>b.id===billId);if(!b||b.status!=='pending'||b.currency!==a.currency)return alert('Платёж недоступен для этого счёта');
+  const already=state.reservations.filter(r=>r.billId===billId&&r.id!==reserveId.value).reduce((n,r)=>n+Number(r.amount),0);
+  if(already+amount>b.amount+.005)return alert('Резерв по этому платежу превысит сумму обязательства');
+ }
+ const r={id:reserveId.value||uid(),name,accountId:a.id,amount:monoRound(amount),note:reserveNote.value.trim(),...(billId?{billId}:{})};
+ if(reserveId.value)state.reservations=state.reservations.map(x=>x.id===r.id?r:x);else state.reservations.push(r);
+ save();reserveDialog.close();
+};
+function deleteReserve(id){if(confirm('Освободить этот резерв? Баланс счёта не изменится.')){state.reservations=state.reservations.filter(r=>r.id!==id);save()}}
+function renderLiquidity(){
+ initLiquidity();const stats=liquidityByCurrency();
+ const home=document.getElementById('liquidityHome'),plan=document.getElementById('liquidityPlanning'),list=document.getElementById('reserveList'),forecast=document.getElementById('forecastPanel');
+ const cards=stats.map(liquidityCard).join('')||'<div class="empty">Добавь счёт, чтобы увидеть свободные деньги.</div>';
+ if(home)home.innerHTML=cards;
+ if(plan)plan.innerHTML='<div class="liquidity-grid planning">'+cards+'</div>';
+ if(list)list.innerHTML=state.reservations.length?state.reservations.map(r=>{
+  const a=state.accounts.find(a=>a.id===r.accountId),b=state.bills.find(b=>b.id===r.billId);
+  return `<div class="reserve-row"><div class="plan-top"><strong>${esc(r.name)}</strong><span class="amount">${esc(fmt(r.amount,a?.currency||''))}</span></div><div class="reserve-mini">${esc(a?.name||'Счёт удалён')}${b?' · '+esc(b.name):''}</div>${r.note?`<div class="small muted">${esc(r.note)}</div>`:''}<div class="actions"><button class="btn tiny secondary" onclick="openReserve('${r.id}')">Изменить</button><button class="btn tiny secondary" onclick="deleteReserve('${r.id}')">Освободить</button></div></div>`
+ }).join(''):'<div class="empty">Резервов пока нет. Деньги на счетах считаются свободными, но обязательства всё равно могут требовать оплаты.</div>';
+ if(forecast){
+  const currencies=new Set([...stats.map(x=>x.currency),...state.bills.filter(b=>!billFullyPaid(b)).map(b=>b.currency),...state.payroll.map(p=>p.currency)]);
+  forecast.innerHTML=[...currencies].map(c=>{
+   const actual=monoRound(stats.find(x=>x.currency===c)?.total||0);
+   const bills=state.bills.filter(b=>!billFullyPaid(b)&&b.currency===c).sort((a,b)=>a.due.localeCompare(b.due));
+   const dated=state.payroll.filter(p=>p.currency===c&&p.date&&p.date>=today());
+   const undated=state.payroll.filter(p=>p.currency===c&&!p.date);
+   const past=state.payroll.filter(p=>p.currency===c&&p.date&&p.date<today());
+   const due=monoRound(bills.reduce((n,b)=>n+billRemaining(b),0));
+   const futureIncome=monoRound(dated.reduce((n,p)=>n+Math.max(0,p.gross-dedTotal(p)),0));
+   const missing=monoRound(Math.max(0,due-actual));
+   const dateLimit=bills.length?bills[bills.length-1].due:'';
+   const eligible=monoRound(dated.filter(p=>p.date<=dateLimit).reduce((n,p)=>n+Math.max(0,p.gross-dedTotal(p)),0));
+   const noBills=bills.length===0;
+   const status=noBills?'Обязательных платежей в этой валюте пока нет':missing>0?'⚠ Сейчас не хватает на платежи: '+fmt(missing,c):'✓ Текущие деньги покрывают общую сумму платежей';
+   const note=undated.length?'⚠ '+undated.length+' начисл. без даты не включены в прогноз. ':'';
+   const oldNote=past.length?'⚠ '+past.length+' начисл. с прошедшей датой исключены. ':'';
+   return `<div class="forecast-currency"><div class="forecast-heading">${esc(c)} <span class="forecast-flag ${noBills?'':missing>0?'risk':'ok'}">${noBills?'Без платежей':bills.length+' платёж(ей)'}</span></div><div class="forecast-detail"><span>Фактически на счетах</span><strong>${esc(fmt(actual,c))}</strong></div><div class="forecast-detail"><span>Неоплаченные платежи</span><strong>${esc(fmt(due,c))}</strong></div><div class="forecast-detail"><span>Ожидаемые выплаты с датой*</span><strong>${esc(fmt(futureIncome,c))}</strong></div>${noBills?'':`<div class="forecast-detail"><span>Не хватает без будущих доходов</span><strong class="${missing>0?'neg':'pos'}">${esc(fmt(missing,c))}</strong></div><div class="forecast-detail"><span>Ожидается до последнего срока (${esc(dateLimit)})</span><strong>${esc(fmt(eligible,c))}</strong></div>`}<div class="forecast-status ${noBills?'neutral':missing>0?'risk':'ok'}">${esc(status)}</div>${note||oldNote?`<div class="forecast-sub">${esc(note+oldNote)}</div>`:''}</div>`;
+  }).join('')+'<p class="notice">* Только начисления с указанной будущей датой. Это условные поступления, не фактический баланс. Начисления с прошедшей датой и без даты не прибавляются. Платежи в других валютах требуют реального обмена и отдельной операции.</p>';
+ }
+
+}
+
+const oldRender=render;render=function(){oldRender();buildInsights();renderPlanning();renderLiquidity()};render();recoverFromIDB();
+
+
+// MONO 0.8 — deadline-aware bill timeline, conservative and optimistic projections.
+function dueLabel(d){const n=Math.round((Date.parse(d+'T12:00:00')-Date.parse(today()+'T12:00:00'))/86400000);return n<0?'Просрочено '+(-n)+' дн.':n===0?'Сегодня':n===1?'Завтра':'Через '+n+' дн.'}
+function linkedReserve(b){return monoRound(state.reservations.filter(r=>r.billId===b.id&&state.accounts.some(a=>a.id===r.accountId&&a.currency===b.currency)).reduce((n,r)=>n+Number(r.amount),0))}
+function forecastForBill(b){
+ const earlier=state.bills.filter(x=>x.status==='pending'&&x.currency===b.currency&&(x.due<b.due||(x.due===b.due&&x.id<=b.id))).sort((a,z)=>a.due.localeCompare(z.due)||a.id.localeCompare(z.id));
+ const cumulative=monoRound(earlier.reduce((n,x)=>n+x.amount,0));
+ const actual=monoRound(state.accounts.filter(a=>a.currency===b.currency).reduce((n,a)=>n+balance(a.id),0));
+ const salary=monoRound(state.payroll.filter(p=>p.currency===b.currency&&p.date&&p.date>=today()&&p.date<=b.due).reduce((n,p)=>n+Math.max(0,p.gross-dedTotal(p)),0));
+ const sameDay=state.payroll.some(p=>p.currency===b.currency&&p.date===b.due);
+ return {actual,salary,cumulative,sameDay,short:monoRound(Math.max(0,cumulative-actual)),conditionalShort:monoRound(Math.max(0,cumulative-actual-salary))};
+}
+function renderBillTimeline(){
+ const el=document.getElementById('timelinePanel'),hint=document.getElementById('legacyBillHint');if(!el)return;
+ const pending=state.bills.filter(b=>b.status==='pending').slice().sort((a,b)=>a.due.localeCompare(b.due)||a.id.localeCompare(b.id));
+ el.innerHTML=pending.length?pending.map(b=>{
+  const f=forecastForBill(b),reserved=linkedReserve(b),pct=Math.min(100,Math.max(0,reserved/b.amount*100));
+  const status=f.short>0?'Дефицит без будущих поступлений: '+fmt(f.short,b.currency):'По текущим остаткам сумма покрывается';
+  const conditional=f.salary>0?(f.conditionalShort>0?'Даже с ожидаемыми выплатами не хватает '+fmt(f.conditionalShort,b.currency):'С учётом ожидаемых выплат дефицит может закрыться')+(f.sameDay?' · выплата в день платежа, возможен риск задержки':''):'';
+  return `<div class="timeline-row"><div class="plan-top"><div><div class="timeline-name">${esc(b.name)}</div><div class="timeline-meta">${esc(b.due)} · ${esc(dueLabel(b.due))} · ${esc(b.currency)}</div></div><div class="timeline-amount ${f.short>0?'risk':'ok'}">${esc(fmt(b.amount,b.currency))}</div></div><div class="timeline-meta">${esc(status)}</div>${conditional?`<div class="timeline-meta">${esc(conditional)}</div>`:''}<div class="timeline-meter"><div style="width:${pct}%"></div></div><div class="timeline-meta">Привязано резервов: ${esc(fmt(reserved,b.currency))} из ${esc(fmt(b.amount,b.currency))}. Резервы уже входят в остаток, второй раз не прибавляются.</div><div class="actions"><button class="btn tiny secondary" onclick="editBill('${b.id}')">Изменить</button><button class="btn tiny secondary" onclick="showView('planning');openReserve()">+ Резерв</button></div></div>`;
+ }).join(''):'<div class="empty">Обязательных платежей пока нет. Добавь аренду или другие регулярные обязательства через «+ Платёж».</div>';
+ // Never migrate or duplicate legacy goals silently.
+ const candidates=state.goals.filter(g=>g.date&&g.date>=today()&&!state.bills.some(b=>b.currency===g.currency&&b.due===g.date&&b.name.trim().toLowerCase()===g.name.trim().toLowerCase()));
+ if(hint)hint.innerHTML=candidates.length?`<div class="hint-legacy"><strong>Есть цели, похожие на будущие платежи</strong><p class="notice">Цели не участвуют в прогнозе. Добавь обязательный платёж только если его действительно нужно оплатить. Сама цель останется для истории.</p>${candidates.slice(0,3).map(g=>`<div class="timeline-row"><div class="timeline-name">${esc(g.name)}</div><div class="timeline-meta">${esc(fmt(g.target,g.currency))} · ${esc(g.date)}</div><button class="btn tiny secondary mini-action" onclick="createBillFromGoal('${g.id}')">Добавить в платежи</button></div>`).join('')}</div>`:'';
+}
+function createBillFromGoal(id){const g=state.goals.find(x=>x.id===id);if(!g)return;openBill();billName.value=g.name;billAmount.value=g.target;billCurrency.value=g.currency;billDue.value=g.date||today();billNote.value='Создано вручную на основе цели';}
+const render08=render;render=function(){render08();renderBillTimeline()};render();
+
+// MONO 0.9: obligations are single source of truth, linked expenses represent real payment.
+function billPaidSum(b){return monoRound(state.tx.filter(t=>t.type==='expense'&&t.billId===b.id&&state.accounts.some(a=>a.id===t.account&&a.currency===b.currency)).reduce((n,t)=>n+Number(t.amount),0))}
+function billRemaining(b){return b.status==='paid'&&!billPaidSum(b)?0:monoRound(Math.max(0,b.amount-billPaidSum(b)))}
+function billFullyPaid(b){return billRemaining(b)<=0.005}
+function sameLegacyGoal(g){return state.bills.some(b=>b.currency===g.currency&&b.due===g.date&&b.name.trim().toLowerCase()===g.name.trim().toLowerCase()&&Math.abs(Number(b.amount)-Number(g.target))<.01)}
+function savingsGoals(){return state.goals.filter(g=>!sameLegacyGoal(g))}
+function billRecurringNext(d,anchorDay){const [y,m,originalDay]=d.split('-').map(Number);const day=anchorDay||originalDay;const monthIndex=y*12+(m-1)+1,yy=Math.floor(monthIndex/12),mm=monthIndex%12+1;const last=new Date(Date.UTC(yy,mm,0)).getUTCDate();return `${yy}-${String(mm).padStart(2,'0')}-${String(Math.min(day,last)).padStart(2,'0')}`}
+function createNextRecurring(b){if(b.repeat!=='monthly'||!billFullyPaid(b))return false;const due=billRecurringNext(b.due,b.anchorDay),series=b.seriesId||b.id;if(state.bills.some(x=>x.seriesId===series&&x.due===due))return false;state.bills.push({id:uid(),name:b.name,amount:b.amount,currency:b.currency,due,status:'pending',note:b.note||'',repeat:'monthly',seriesId:series,originId:b.id,anchorDay:b.anchorDay||Number(b.due.slice(-2))});return true}
+function linkedReserveTotal(b){return monoRound(state.reservations.filter(r=>r.billId===b.id&&state.accounts.some(a=>a.id===r.accountId&&a.currency===b.currency)).reduce((n,r)=>n+Number(r.amount),0))}
+function releasePaidReserves(b,accountId,amount){let left=monoRound(amount);const ordered=state.reservations.filter(r=>r.billId===b.id&&r.accountId===accountId);for(const r of ordered){if(left<=.005)break;const released=Math.min(Number(r.amount),left);r.amount=monoRound(r.amount-released);left=monoRound(left-released)}state.reservations=state.reservations.filter(r=>r.amount>.005)}
+function openBillPayment(id){const b=state.bills.find(x=>x.id===id);if(!b||billFullyPaid(b))return alert('Платёж уже закрыт');billPaymentForm.reset();paymentBillId.value=id;paymentBillInfo.textContent=b.name+' · осталось '+fmt(billRemaining(b),b.currency);paymentAccount.innerHTML=state.accounts.filter(a=>a.currency===b.currency).map(a=>`<option value="${esc(a.id)}">${esc(a.name)} · ${esc(fmt(balance(a.id),a.currency))}</option>`).join('');if(!paymentAccount.options.length)return alert('Добавь счёт в валюте '+b.currency);paymentAmount.value='';paymentAmount.placeholder='Не более '+fmt(Math.min(Math.max(0,balance(paymentAccount.value)),billRemaining(b)),b.currency);paymentAmount.max=billRemaining(b);paymentDate.value=today();paymentExisting.innerHTML='<option value="">Выбери операцию…</option>'+state.tx.filter(t=>t.type==='expense'&&!t.billId&&state.accounts.some(a=>a.id===t.account&&a.currency===b.currency)&&t.amount<=billRemaining(b)+.005).sort((x,y)=>y.date.localeCompare(x.date)).map(t=>`<option value="${esc(t.id)}">${esc(t.date)} · ${esc(fmt(t.amount,b.currency))} · ${esc(t.category)} · ${esc(state.accounts.find(a=>a.id===t.account)?.name||'')}</option>`).join('');billPaymentDialog.showModal()}
+billPaymentForm.onsubmit=e=>{e.preventDefault();const b=state.bills.find(x=>x.id===paymentBillId.value),a=state.accounts.find(x=>x.id===paymentAccount.value),amount=monoRound(Number(paymentAmount.value));if(!b||!a||a.currency!==b.currency||!Number.isFinite(amount)||amount<=0||amount>billRemaining(b)+.005)return alert('Проверь сумму и валюту оплаты');if(!paymentDate.value)return alert('Укажи дату оплаты');if(amount>balance(a.id)+.005)return alert('Недостаточно денег на счёте: '+fmt(balance(a.id),a.currency)+'. MONO не запишет отрицательный остаток. Проверь счёт, сумму или сначала внеси реальное пополнение.');
+ const before=JSON.stringify({tx:state.tx,reservations:state.reservations,bills:state.bills});
+ const tx={id:uid(),created:Date.now(),date:paymentDate.value,type:'expense',account:a.id,amount,category:b.name.toLowerCase().includes('аренд')?'Аренда':b.name.toLowerCase().includes('коммун')||b.name.toLowerCase()==='ку'?'Коммунальные':'Другое',note:paymentNote.value.trim()||'Оплата: '+b.name,billId:b.id};
+ state.tx.push(tx);releasePaidReserves(b,a.id,amount);
+ if(!reconcileReserveAccounts([a.id])){const previous=JSON.parse(before);state.tx=previous.tx;state.reservations=previous.reservations;state.bills=previous.bills;return}
+ if(billFullyPaid(b)){b.status='paid';createNextRecurring(b)}save();billPaymentDialog.close()};
+function linkExistingBillExpense(){const b=state.bills.find(x=>x.id===paymentBillId.value),t=state.tx.find(x=>x.id===paymentExisting.value);if(!b||!t||t.billId||t.type!=='expense'||!state.accounts.some(a=>a.id===t.account&&a.currency===b.currency)||t.amount>billRemaining(b)+.005)return alert('Выбери подходящий расход, который ещё не связан с другим платежом.');if(!confirm('Привязать уже учтённый расход? Повторного списания не будет.'))return;
+ const before=JSON.stringify({tx:state.tx,reservations:state.reservations});t.billId=b.id;releasePaidReserves(b,t.account,t.amount);
+ if(!reconcileReserveAccounts([t.account])){const old=JSON.parse(before);state.tx=old.tx;state.reservations=old.reservations;return}
+ if(billFullyPaid(b)){b.status='paid';createNextRecurring(b)}save();billPaymentDialog.close()}
+
+// All real payment transactions remain in history. Deleting one reopens the bill; recurring future bills are not deleted.
+const deleteTx09=deleteTx;deleteTx=function(id){const t=state.tx.find(x=>x.id===id);if(!t)return;if(!t.billId)return deleteTx09(id);if(!confirm('Удалить связанную оплату? Баланс вернётся назад, а обязательство снова станет неоплаченным. Освобождённый резерв автоматически не восстановится.'))return;state.tx=state.tx.filter(x=>x.id!==id);const b=state.bills.find(x=>x.id===t.billId);if(b)b.status='pending';save()};
+const editTx09=editTx;editTx=function(id){const t=state.tx.find(x=>x.id===id);if(t?.billId)return alert('Этот расход связан с обязательством. Для исправления удали оплату и запиши её заново через карточку платежа.');return editTx09(id)};
+const oldOpenBill09=openBill;openBill=function(){oldOpenBill09();billRepeat.value='none';billStatus.value='pending'};
+editBill=function(id){const b=state.bills.find(x=>x.id===id);if(!b)return;openBill();billId.value=b.id;billName.value=b.name;billAmount.value=b.amount;billCurrency.value=b.currency;billDue.value=b.due;billStatus.value=b.status;billRepeat.value=b.repeat||'none';billNote.value=b.note||''};
+billForm.onsubmit=e=>{e.preventDefault();const amount=monoRound(Number(billAmount.value)),old=state.bills.find(x=>x.id===billId.value);if(!Number.isFinite(amount)||amount<=0)return alert('Укажи корректную сумму');if(old&&billPaidSum(old)>.005&&(billCurrency.value!==old.currency||amount+0.005<billPaidSum(old)))return alert('Нельзя сменить валюту или установить сумму меньше уже оплаченной.');if(old&&state.reservations.some(r=>r.billId===old.id)&&(old.currency!==billCurrency.value||amount+0.005<linkedReserveTotal(old)))return alert('Сначала скорректируй связанные резервы.');const b={id:old?.id||uid(),name:billName.value.trim(),amount,currency:billCurrency.value,due:billDue.value,status:old?.status||'pending',note:billNote.value.trim(),repeat:billRepeat.value,seriesId:old?.seriesId||old?.id||undefined,originId:old?.originId,anchorDay:old?.anchorDay||Number(billDue.value.slice(-2))};if(old){state.bills=state.bills.map(x=>x.id===b.id?b:x)}else state.bills.push(b);if(billFullyPaid(b))createNextRecurring(b);save();billDialog.close()};
+toggleBill=function(id){const b=state.bills.find(x=>x.id===id);if(!b)return;if(billPaidSum(b)>.005)return alert('У этого платежа есть связанные расходы. Статус рассчитывается по фактическим оплатам.');if(b.status==='pending'){if(!confirm('Отметить как оплаченный БЕЗ записи расхода? Это подходит только для платежей, учтённых ранее. Баланс не изменится.'))return;b.status='paid';releasePaidReserves(b,'',b.amount);createNextRecurring(b)}else b.status='pending';save()};
+removeBill=function(id){const b=state.bills.find(x=>x.id===id);if(!b)return;if(state.reservations.some(r=>r.billId===id))return alert('Сначала освободи связанные резервы.');if(state.tx.some(t=>t.billId===id))return alert('Нельзя удалить платёж с реальными оплатами. История расходов должна сохраниться.');if(!confirm('Удалить обязательство?'))return;state.bills=state.bills.filter(x=>x.id!==id);save()};
+function renderBillTimeline(){const el=document.getElementById('timelinePanel');if(!el)return;const bills=state.bills.slice().sort((a,b)=>Number(billFullyPaid(a))-Number(billFullyPaid(b))||a.due.localeCompare(b.due));el.innerHTML=bills.length?bills.map(b=>{const paid=billPaidSum(b),remain=billRemaining(b),done=billFullyPaid(b),reserve=linkedReserveTotal(b),pct=Math.min(100,Math.max(0,100*paid/b.amount)),f=done?null:forecastForBill(b);return `<div class="bill09 ${done?'bill09-paid':''}"><div class="bill09-header"><span class="bill09-title">${esc(b.name)}</span><span class="bill09-status ${!done&&b.due<today()?'risk':''}">${done?'Оплачено':b.due<today()?'Просрочено':'К оплате'}</span></div><div class="bill09-split"><div class="bill09-sum ${done?'pos':''}">${esc(fmt(b.amount,b.currency))}</div><div class="bill09-meta" style="text-align:right">${esc(b.due)}<div>${esc(b.repeat==='monthly'?'↻ Ежемесячно':'Разовый')}</div></div></div><div class="bill09-meter"><div style="width:${pct}%"></div></div><div class="bill09-meta">Оплачено ${esc(fmt(done&&!paid?b.amount:paid,b.currency))} · Осталось ${esc(fmt(remain,b.currency))}</div>${reserve?`<div class="bill09-meta">Выделено на счетах: ${esc(fmt(reserve,b.currency))}</div>`:''}${!done&&f?.short>0?`<div class="bill09-note neg">На текущих счетах не хватает ${esc(fmt(f.short,b.currency))} с учётом предыдущих платежей этой валюты.</div>`:''}${b.note?`<div class="bill09-note">${esc(b.note)}</div>`:''}<div class="actions">${!done?`<button class="btn tiny" onclick="openBillPayment('${b.id}')">Оплатить</button><button class="btn tiny secondary" onclick="openReserveForBill('${b.id}')">+ Резерв</button>`:''}<details class="bill-more"><summary>Ещё</summary><button class="btn tiny secondary" onclick="editBill('${b.id}')">Изменить</button>${!done&&!paid?`<button class="btn tiny secondary" onclick="toggleBill('${b.id}')">Уже оплачено</button>`:''}<button class="btn tiny secondary" onclick="removeBill('${b.id}')">Удалить</button></details></div></div>`}).join(''):'<div class="empty">Пока нет обязательств. Добавь аренду, коммуналку или другой платёж.</div>';const hint=document.getElementById('legacyBillHint');if(hint)hint.innerHTML='';}
+function openReserveForBill(id){const b=state.bills.find(x=>x.id===id);if(!b)return;openReserve();reserveName.value=b.name;const a=state.accounts.find(x=>x.currency===b.currency&&balance(x.id)-reservedForAccount(x.id)>.005)||state.accounts.find(x=>x.currency===b.currency);if(a)reserveAccount.value=a.id;updateReserveHint();reserveBill.value=id;const remaining=Math.max(0,billRemaining(b)-linkedReserveTotal(b)),available=a?Math.max(0,balance(a.id)-reservedForAccount(a.id)):0;reserveAmount.value=monoRound(Math.min(remaining,available))||'';updateReserveHint();reserveBill.value=id}
+// In a recurring series the cumulative forecast uses only unpaid portions, not original amounts.
+forecastForBill=function(b){const earlier=state.bills.filter(x=>!billFullyPaid(x)&&x.currency===b.currency&&(x.due<b.due||(x.due===b.due&&x.id<=b.id))).sort((a,z)=>a.due.localeCompare(z.due)||a.id.localeCompare(z.id));const cumulative=monoRound(earlier.reduce((n,x)=>n+billRemaining(x),0)),actual=monoRound(state.accounts.filter(a=>a.currency===b.currency).reduce((n,a)=>n+balance(a.id),0)),salary=monoRound(state.payroll.filter(p=>p.currency===b.currency&&p.date&&p.date>=today()&&p.date<=b.due).reduce((n,p)=>n+Math.max(0,p.gross-dedTotal(p)),0));return {actual,salary,cumulative,sameDay:state.payroll.some(p=>p.currency===b.currency&&p.date===b.due),short:monoRound(Math.max(0,cumulative-actual)),conditionalShort:monoRound(Math.max(0,cumulative-actual-salary))}};
+// Existing dashboard goals remain in storage but are suppressed when mirrored by a matching obligation.
+function renderGoals09(){const goals=savingsGoals();const h=document.getElementById('homeGoals'),a=document.getElementById('allGoals');h.innerHTML=goals.slice(0,3).map(goalHTML).join('')||'<div class="goal09-empty">Нет целей накопления. Аренда и коммуналка теперь находятся в обязательных платежах.</div>';a.innerHTML=goals.map(g=>`<div class="card" style="margin-bottom:12px">${goalHTML(g)}</div>`).join('')||'<div class="goal09-empty">Добавь финансовую подушку или другую цель накопления.</div>';const hidden=state.goals.filter(sameLegacyGoal),info=document.getElementById('legacyGoalsInfo');if(info)info.innerHTML=hidden.length?`<div class="legacy09"><strong>Скрыто дубликатов старых целей: ${hidden.length}</strong><p class="notice">Данные не удалены. Это прежние цели, совпадающие с обязательными платежами. Они не участвуют в прогнозе.</p><button class="btn tiny secondary" onclick="toggleLegacyGoals09()">${window.showLegacy09?'Скрыть':'Показать'} старые цели</button>${window.showLegacy09?hidden.map(g=>`<div class="item"><span>${esc(g.name)} · ${esc(fmt(g.target,g.currency))}</span><button class="btn tiny secondary" onclick="editGoal('${g.id}')">Изменить</button></div>`).join(''):''}</div>`:''}
+function toggleLegacyGoals09(){window.showLegacy09=!window.showLegacy09;renderGoals09()}
+const render09base=render;render=function(){render09base();renderGoals09();renderBillTimeline();const panel=document.getElementById('forecastPanel');if(panel){for(const row of panel.querySelectorAll('.forecast-currency')){const text=row.querySelector('.forecast-heading');if(!text)continue;const currency=text.textContent.trim().split(' ')[0];const due=state.bills.filter(b=>b.currency===currency&&!billFullyPaid(b)).reduce((n,b)=>n+billRemaining(b),0);const lines=row.querySelectorAll('.forecast-detail');for(const line of lines){if(line.firstElementChild?.textContent==='Неоплаченные платежи')line.lastElementChild.textContent=fmt(due,currency);}}} };render();
+
+
+
+// MONO 0.9.1: automatic, auditable reserve protection. Reserves are earmarks, not expenses.
+function reserveShortfall(accountId){return monoRound(Math.max(0,reservedForAccount(accountId)-balance(accountId)))}
+function trimAccountReserves(accountId,shortfall){
+ let remaining=monoRound(shortfall);
+ // Unlinked discretionary earmarks first; linked bills last. Never touch another account.
+ const ordered=state.reservations.filter(r=>r.accountId===accountId).sort((a,b)=>Number(Boolean(a.billId))-Number(Boolean(b.billId)));
+ for(const r of ordered){if(remaining<=.005)break;const reduce=monoRound(Math.min(Number(r.amount),remaining));r.amount=monoRound(r.amount-reduce);remaining=monoRound(remaining-reduce)}
+ state.reservations=state.reservations.filter(r=>Number(r.amount)>.005);
+}
+function reconcileReserveAccounts(ids){
+ const affected=[...new Set(ids)].map(id=>({a:state.accounts.find(a=>a.id===id),short:reserveShortfall(id)})).filter(x=>x.a&&x.short>.005);
+ if(!affected.length)return true;
+ const details=affected.map(x=>x.a.name+': '+fmt(x.short,x.a.currency)).join('\n');
+ if(!confirm('Эта операция затрагивает отложенные деньги:\n'+details+'\n\nУменьшить резервы на недостающую сумму? Обязательства и расходы останутся без изменений.\n\nОтмена — не записывать операцию.'))return false;
+ affected.forEach(x=>trimAccountReserves(x.a.id,x.short));return true;
+}
+function repairReservesForCurrency(currency){
+ const affected=state.accounts.filter(a=>a.currency===currency&&reserveShortfall(a.id)>.005);
+ if(!affected.length)return alert('Все резервы обеспечены остатками.');
+ const message=affected.map(a=>a.name+': '+fmt(reserveShortfall(a.id),currency)).join('\n');
+ if(!confirm('Сейчас резервы больше реальных остатков:\n'+message+'\n\nСкорректировать суммы резервов до фактических остатков? Деньги, расходы и обязательства не изменятся.'))return;
+ affected.forEach(a=>trimAccountReserves(a.id,reserveShortfall(a.id)));save();
+}
+// Quick-entry spending and exchange must also respect earmarks.
+txForm.onsubmit=e=>{
+ e.preventDefault();const type=txType.value,account=txAccount.value,amount=monoRound(Number(txAmount.value)),to=txTo.value,received=monoRound(Number(txReceived.value));
+ const a=state.accounts.find(x=>x.id===account),target=state.accounts.find(x=>x.id===to);
+ if(!a||!Number.isFinite(amount)||amount<=0)return alert('Проверь сумму и счёт.');
+ if(type==='transfer'&&(!target||account===to||!Number.isFinite(received)||received<=0))return alert('Выбери разные счета и укажи сумму зачисления.');
+ const old=state.tx.find(t=>t.id===txForm.dataset.edit);
+ if(old?.billId)return alert('Связанную оплату исправляй через обязательства.');
+ const before=state.tx.slice();
+ const item={id:old?.id||uid(),created:old?.created||Date.now(),date:txDate.value,type,account,amount,...(type==='transfer'?{to,received}:{category:txCategory.value}),note:txNote.value.trim()};
+ if(old)state.tx=state.tx.map(t=>t.id===old.id?item:t);else state.tx.push(item);
+ const affected=[account,...(old?[old.account,old.to].filter(Boolean):[])];
+ if(type==='transfer')affected.push(to);
+ if((type==='expense'||type==='transfer')&&balance(account)<-.005){alert('Операция создаёт отрицательный остаток на счёте '+a.name+'. Проверь сумму и счёт. Если деньги действительно были, сначала добавь отсутствующее поступление.');state.tx=before;return}
+ if(!reconcileReserveAccounts(affected)){state.tx=before;return}
+ save();txDialog.close();
+};
+
+
+
+// MONO 0.9.2: smart transaction entry. No synthetic income, no duplicated expenses.
+function mono092Recent(type,category){
+ return state.tx.filter(t=>t.type===type&&(!category||t.category===category)).slice().sort((a,b)=>(b.created||0)-(a.created||0))[0];
+}
+function mono092Norm(v){return String(v||'').toLowerCase().replace(/ё/g,'е').trim()}
+function mono092CategoryFromNote(note,type){
+ const n=mono092Norm(note);if(!n)return '';
+ const rules=type==='expense'?[['Аренда',/аренд|квартир|rent/],['Коммунальные',/коммун|\bку\b|свет|электр|водоснаб|газ за/],['Продукты',/продукт|магазин|супермаркет|никор|карфур|spar|овощ|молоко|сыр/],['Табак',/табак|сигарет|стик|heets|iqos/],['Коты',/кот|кошк|корм|наполнител/],['Связь',/интернет|мобильн|сим.?карт|телефон/],['Транспорт',/такси|автобус|метро|bolt/],['Кафе и рестораны',/кафе|ресторан|кофе|доставка еды/],['Здоровье',/аптек|лекарств|врач/]]:[['Аванс зарплаты',/аванс/],['Зарплата',/зарплат|оклад/],['Дизайн',/дизайн|макет|афиш/],['Фриланс',/фриланс/],['Подработка',/подработк/],['Бизнес',/бизнес|заказчик/]];
+ return rules.find(([_,re])=>re.test(n))?.[0]||'';
+}
+function mono092BillMatch(b,category,note){
+ const text=mono092Norm(b.name),n=mono092Norm(note),cat=mono092Norm(category);
+ if(n&&n.length>=3&&(text.includes(n)||n.includes(text)))return 100;
+ if(cat==='аренда'&&/аренд|квартир|rent/.test(text))return 80;
+ if(cat==='коммунальные'&&/коммун|\bку\b|электр|вода|газ/.test(text))return 80;
+ if(n&&n.length>=4&&text.split(/\s+/).some(word=>word.length>=4&&n.includes(word)))return 65;
+ return 0;
+}
+function mono092UpdateBillLink(){
+ const box=document.getElementById('smartBillBox'),sel=document.getElementById('smartBillSelect'),hint=document.getElementById('smartBillHint');
+ if(!box||!sel)return;
+ if(txType.value!=='expense'){box.hidden=true;sel.value='';return}
+ const a=state.accounts.find(a=>a.id===txAccount.value),amount=monoRound(Number(txAmount.value)||0);
+ const options=(state.bills||[]).filter(b=>a&&b.currency===a.currency&&!billFullyPaid(b)&&billRemaining(b)>0.005)
+  .map(b=>({b,score:mono092BillMatch(b,txCategory.value,txNote.value)}))
+  .sort((x,y)=>y.score-x.score||x.b.due.localeCompare(y.b.due));
+ if(!options.length){box.hidden=true;sel.value='';return}
+ const previous=sel.value;
+ sel.innerHTML='<option value="">Обычный расход — без обязательства</option>'+options.map(({b})=>`<option value="${esc(b.id)}">${esc(b.name)} · ${esc(fmt(billRemaining(b),b.currency))} осталось</option>`).join('');
+ const strong=options.filter(x=>x.score>=80&&(!amount||amount<=billRemaining(x.b)+0.005));
+ const best=strong.length===1?strong[0].b:null;
+ const previousStill=options.some(x=>x.b.id===previous);
+ if(sel.dataset.manual==='1'&&previousStill)sel.value=previous;
+ else if(best)sel.value=best.id;
+ else sel.value='';
+ box.hidden=!best&&!previousStill&&options.every(x=>x.score===0);
+ if(!box.hidden){const b=state.bills.find(b=>b.id===sel.value);hint.textContent=b?'MONO учтёт эту оплату в обязательстве и освободит его резерв на выбранном счёте.':'Выбери платёж, если расход относится к нему. Без выбора он останется обычным расходом.'}
+}
+function mono092SmartHint(){
+ const hint=document.getElementById('smartEntryHint');if(!hint)return;
+ const a=state.accounts.find(a=>a.id===txAccount.value),amount=monoRound(Number(txAmount.value)||0);
+ if(!a||!amount||txType.value==='income'){hint.textContent='';return}
+ if(txType.value==='transfer'){hint.textContent='Перевод между своими счетами не считается доходом или расходом.';return}
+ const reserve=reservedForAccount(a.id),free=monoRound(balance(a.id)-reserve);
+ hint.textContent='На счёте '+fmt(balance(a.id),a.currency)+' · свободно '+fmt(free,a.currency)+(amount>free+0.005?' · расход затронет резерв или приведёт к минусу':'');
+}
+function mono092SmartRefresh(){mono092UpdateBillLink();mono092SmartHint()}
+const mono092OldOpenTx=openTx;
+openTx=function(){
+ mono092OldOpenTx();
+ txForm.dataset.smartManual='';smartBillSelect.dataset.manual='';
+ const recent=mono092Recent(txType.value);
+ if(recent){txAccount.value=recent.account;if(recent.category&&[...txCategory.options].some(o=>o.value===recent.category))txCategory.value=recent.category}
+ mono092SmartRefresh();
+};
+const mono092OldTxFields=txFields;
+txFields=function(){
+ mono092OldTxFields();
+ txForm.dataset.smartManual='';smartBillSelect.dataset.manual='';
+ const recent=mono092Recent(txType.value);
+ if(recent&&[...txAccount.options].some(o=>o.value===recent.account))txAccount.value=recent.account;
+ if(recent?.category&&[...txCategory.options].some(o=>o.value===recent.category))txCategory.value=recent.category;
+ mono092SmartRefresh();
+};
+// Avoid editing surprises: an existing operation opens with its original category/account.
+const mono092OldEditTx=editTx;
+editTx=function(id){mono092OldEditTx(id);if(txForm.dataset.edit){smartBillBox.hidden=true;smartBillSelect.value='';smartEntryHint.textContent='Изменение существующей операции: связи с обязательствами сохраняются только через раздел платежей.'}}
+for(const name of ['txAccount','txAmount','txNote'])document.getElementById(name).addEventListener('input',()=>{
+ if(name==='txNote'&&txForm.dataset.smartManual!=='1'){
+  const cat=mono092CategoryFromNote(txNote.value,txType.value);
+  if(cat&&[...txCategory.options].some(o=>o.value===cat))txCategory.value=cat;
+ }
+ if(name==='txNote')smartBillSelect.dataset.manual='';
+ mono092SmartRefresh();
+});
+txCategory.addEventListener('change',()=>{
+ txForm.dataset.smartManual='1';smartBillSelect.dataset.manual='';
+ const recent=mono092Recent(txType.value,txCategory.value);
+ if(recent&&[...txAccount.options].some(o=>o.value===recent.account))txAccount.value=recent.account;
+ mono092SmartRefresh();
+});
+smartBillSelect.addEventListener('change',()=>{smartBillSelect.dataset.manual='1';mono092SmartRefresh()});
+// Use one expense transaction as the source of truth for payment and ledger.
+txForm.onsubmit=e=>{
+ e.preventDefault();const type=txType.value,account=txAccount.value,amount=monoRound(Number(txAmount.value)),to=txTo.value,received=monoRound(Number(txReceived.value));
+ const a=state.accounts.find(x=>x.id===account),target=state.accounts.find(x=>x.id===to);
+ if(!a||!Number.isFinite(amount)||amount<=0)return alert('Проверь сумму и счёт.');
+ if(type==='transfer'&&(!target||account===to||!Number.isFinite(received)||received<=0))return alert('Выбери разные счета и укажи сумму зачисления.');
+ const old=state.tx.find(t=>t.id===txForm.dataset.edit);
+ if(old?.billId)return alert('Связанную оплату исправляй через обязательства.');
+ const selectedBill=type==='expense'&&!old&&smartBillBox.hidden===false?state.bills.find(b=>b.id===smartBillSelect.value):null;
+ if(selectedBill&&(a.currency!==selectedBill.currency||amount>billRemaining(selectedBill)+.005))return alert('Сумма больше остатка обязательства или валюта не совпадает.');
+ const category=txCategory.value;
+ if(!old&&state.tx.some(t=>t.type===type&&t.account===account&&t.date===txDate.value&&Math.abs(t.amount-amount)<0.005&&(type==='transfer'?t.to===to&&Math.abs(t.received-received)<.005:t.category===category))){
+  if(!confirm('Похожая операция уже есть за эту дату. Всё равно записать ещё одну?'))return;
+ }
+ const before=JSON.stringify({tx:state.tx,reservations:state.reservations,bills:state.bills});
+ const item={id:old?.id||uid(),created:old?.created||Date.now(),date:txDate.value,type,account,amount,...(type==='transfer'?{to,received}:{category}),note:txNote.value.trim(),...(selectedBill?{billId:selectedBill.id}:{})};
+ if(old)state.tx=state.tx.map(t=>t.id===old.id?item:t);else state.tx.push(item);
+ if(selectedBill)releasePaidReserves(selectedBill,account,amount);
+ const affected=[account,...(old?[old.account,old.to].filter(Boolean):[])];if(type==='transfer')affected.push(to);
+ if((type==='expense'||type==='transfer')&&balance(account)<-.005){alert('Операция создаёт отрицательный остаток на счёте '+a.name+'. Проверь сумму и счёт. Если деньги действительно были, сначала добавь отсутствующее поступление.');
+  const prev=JSON.parse(before);state.tx=prev.tx;state.reservations=prev.reservations;state.bills=prev.bills;return;
+ }
+ if(!reconcileReserveAccounts(affected)){
+  const prev=JSON.parse(before);state.tx=prev.tx;state.reservations=prev.reservations;state.bills=prev.bills;return;
+ }
+ if(selectedBill&&billFullyPaid(selectedBill)){selectedBill.status='paid';createNextRecurring(selectedBill)}
+ save();txDialog.close();
+};
+
+
+function mono093PaymentHint(){
+ const a=state.accounts.find(x=>x.id===paymentAccount.value),b=state.bills.find(x=>x.id===paymentBillId.value);
+ const hint=document.getElementById('paymentSafetyHint');if(!hint||!a||!b)return;
+ const available=Math.max(0,balance(a.id)),remaining=billRemaining(b),limit=Math.min(available,remaining);
+ hint.textContent='На счёте '+fmt(balance(a.id),a.currency)+' · долг '+fmt(remaining,b.currency)+'. Можно записать оплату до '+fmt(limit,a.currency)+'. Если расход уже есть в истории, используй привязку ниже — без второго списания.';
+ paymentAmount.placeholder='До '+fmt(limit,a.currency);
+}
+paymentAccount.addEventListener('change',mono093PaymentHint);
+paymentAmount.addEventListener('input',mono093PaymentHint);
+const mono093OpenBillPayment=openBillPayment;
+openBillPayment=function(id){mono093OpenBillPayment(id);if(billPaymentDialog.open)mono093PaymentHint()};
+
+// MONO 1.0 — additive usability layer; state remains mono.finance.v1.
+const MONO_100='1.0.0';
+const mono100OldBalance=balance;
+balance=function(id){const extra=(state.reconciliations||[]).filter(r=>r.accountId===id).reduce((sum,r)=>sum+Number(r.delta||0),0);return monoRound(mono100OldBalance(id)+extra)};
+function monoCurrencyToken(v){const x=mono092Norm(v);if(/^(лари|лар|gel|₾)$/.test(x))return 'GEL';if(/^(доллар|доллара|долларов|доллары|usd|\$|бакс|баксов)$/.test(x))return 'USD';if(/^(руб|рубль|рублей|рубля|rub|₽)$/.test(x))return 'RUB';if(/^(usdt|юсдт)$/.test(x))return 'USDT';if(/^(евро|eur|€)$/.test(x))return 'EUR';return ''}
+function monoParseQuick(raw){
+ const text=String(raw||'').trim(),norm=mono092Norm(text);
+ const m=text.match(/(?:^|\s)([+-]?\d+(?:[.,]\d{1,2})?)\s*(₾|\$|₽|€|лари|лар|gel|usd|руб(?:ль|лей|ля)?|rub|доллар(?:а|ов|ы)?|бакс(?:ов)?|usdt|евро|eur)?(?=\s|$)/i);
+ if(!m)return {error:'Не нашёл сумму. Например: 15 лари продукты TBC'};
+ const amount=Number(m[1].replace(',','.'));if(!(amount>0))return {error:'Сумма должна быть больше нуля'};
+ const currency=monoCurrencyToken(m[2]||'');
+ const type=/^(\+|получил|получила|доход|пришло|заработал|зарплата|аванс|оплатили\b)/i.test(norm)?'income':'expense';
+ let note=text.replace(m[0],' ').replace(/^(получил|получила|доход|пришло|заработал|расход|потратил|оплатил)\s*/i,'').trim();
+ let candidates=state.accounts.filter(a=>!currency||a.currency===currency);
+ const hint=/\b(tbc|тбс|тбц|тибиси)\b/i.test(norm)?'tbc':/\b(нал|наличные|кэш|cash)\b/i.test(norm)?'cash':/\b(сбер|сбербанк)\b/i.test(norm)?'sber':/\b(bybit|байбит)\b/i.test(norm)?'bybit':'';
+ if(hint){const matching=candidates.filter(a=>hint==='tbc'?/tbc|тбс|тибиси/i.test(a.name):hint==='cash'?/налич|cash/i.test(a.name):hint==='sber'?/сбер/i.test(a.name):/bybit|байбит/i.test(a.name));if(matching.length)candidates=matching}
+ const recent=mono092Recent(type),account=candidates.find(a=>a.id===recent?.account)||candidates[0];
+ if(!account)return {error:'Не найден подходящий счёт. Проверь валюту или добавь счёт.'};
+ const merchant=monoMerchantKey(note);
+ const remembered=state.merchantCategories?.[merchant];
+ const category=(remembered&&categories[type].includes(remembered)?remembered:'')||mono092CategoryFromNote(note,type)||categories[type][0];
+ return {type,amount,account:account.id,category,note,ambiguous:!currency||(!hint&&candidates.length>1)};
+}
+function monoQuickSubmit(e){e.preventDefault();const parsed=monoParseQuick(monoQuickText.value);if(parsed.error)return alert(parsed.error);openTx();txType.value=parsed.type;txFields();txAmount.value=parsed.amount;txAccount.value=parsed.account;txCategory.value=parsed.category;txNote.value=parsed.note;document.querySelector('.mono-extra').open=!!parsed.note;txForm.dataset.smartManual='1';mono092SmartRefresh();if(parsed.ambiguous)smartEntryHint.textContent='Проверь выбранный счёт: в тексте он указан не полностью. Ничего не записано.';}
+function monoMerchantKey(note){const n=mono092Norm(note).replace(/[^a-zа-я0-9\s]/g,' ').trim();const words=n.split(/\s+/).filter(Boolean);const ignored=new Set(['продукты','продукт','еда','покупка','оплата','за','в','из','на','tbc','тбс','gel','usd','лари','доллар','руб','кофе','доход','расход','с','карты','наличные']);return words.find(w=>w.length>=3&&!ignored.has(w))||''}
+function monoRememberMerchant(type,note,category){if(type!=='expense'||!note)return;const key=monoMerchantKey(note);if(!key)return;state.merchantCategories=state.merchantCategories||{};state.merchantCategories[key]=category}
+// FX: public mid-market reference, not Google's proprietary feed or a bank execution rate.
+let monoFxManual=false,monoFxRequest=0;
+function monoFXPair(){const a=state.accounts.find(x=>x.id===txAccount.value),b=state.accounts.find(x=>x.id===txTo.value);return a&&b&&a.currency!==b.currency&&a.currency!=='USDT'&&b.currency!=='USDT'?{from:a.currency,to:b.currency}:null}
+function monoFXStatus(message){const el=document.getElementById('monoFxHint');if(el)el.textContent=message}
+function monoFXCached(from,to){const c=state.fxCache?.[from];if(c&&c.rates&&Number(c.rates[to])>0)return {rate:Number(c.rates[to]),updated:c.updated,source:c.source};return null}
+async function monoRefreshFX(force=false){
+ if(txType.value!=='transfer')return;const pair=monoFXPair(),amt=Number(txAmount.value);const request=++monoFxRequest;
+ if(!pair){const a=state.accounts.find(x=>x.id===txAccount.value),b=state.accounts.find(x=>x.id===txTo.value);if(a&&b&&a.currency===b.currency&&amt>0&&!monoFxManual)txReceived.value=amt.toFixed(2);monoFXStatus('Для одинаковой валюты сумма зачисления равна сумме списания. Для USDT укажи фактическую сумму вручную.');return}
+ if(!(amt>0)){monoFXStatus('Введи сумму списания, чтобы рассчитать обмен.');return}
+ const {from,to}=pair,cached=monoFXCached(from,to);
+ if(cached&&!force){monoApplyFX(cached,amt,from,to,request,true);if(Date.now()-new Date(cached.updated).getTime()<6*3600000)return}
+ if(!navigator.onLine){if(!cached)monoFXStatus('Нет интернета и сохранённого курса. Введи сумму зачисления вручную.');return}
+ monoFXStatus('Получаем ориентировочный рыночный курс…');
+ try{
+  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),7000);
+  let obj;try{const res=await fetch('https://open.er-api.com/v6/latest/'+encodeURIComponent(from),{signal:controller.signal,cache:'no-store'});if(!res.ok)throw Error('Курс недоступен');obj=await res.json()}finally{clearTimeout(timer)}
+  if(obj.result!=='success'||!(Number(obj.rates?.[to])>0))throw Error('Нет пары валют');
+  if(request!==monoFxRequest||!monoFXPair()||monoFXPair().from!==from||monoFXPair().to!==to)return;
+  state.fxCache=state.fxCache||{};state.fxCache[from]={rates:obj.rates,updated:obj.time_last_update_utc||new Date().toISOString(),source:'ExchangeRate-API'};
+  // Cache metadata only; do not render/save state while editing a modal.
+  try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}
+  monoApplyFX(monoFXCached(from,to),Number(txAmount.value),from,to,request,false);
+ }catch(e){if(request!==monoFxRequest)return;if(cached)monoApplyFX(cached,Number(txAmount.value),from,to,request,true);else monoFXStatus('Курс сейчас недоступен. Введи фактически полученную сумму вручную.');}
+}
+function monoApplyFX(rateInfo,amount,from,to,request,stale){if(request!==monoFxRequest||!rateInfo)return;const rate=rateInfo.rate;const updated=new Date(rateInfo.updated);const date=Number.isNaN(updated.getTime())?String(rateInfo.updated):updated.toLocaleDateString('ru-RU',{day:'2-digit',month:'short',year:'numeric'});monoFXStatus('1 '+from+' ≈ '+rate.toFixed(5)+' '+to+' · '+(stale?'сохранённый':'рыночный ориентир')+' · '+date+'. Не курс TBC или Google. Проверь фактическую сумму.');if(!monoFxManual&&Number(amount)>0)txReceived.value=(Math.round(amount*rate*100)/100).toFixed(2)}
+function monoFXChanged(){monoFxManual=false;monoRefreshFX()}
+for(const id of ['txAccount','txTo','txAmount'])document.getElementById(id).addEventListener('change',monoFXChanged);
+txAmount.addEventListener('input',()=>{if(txType.value==='transfer')monoRefreshFX()});
+txReceived.addEventListener('input',()=>{monoFxManual=true});
+const mono100OldOpenTx=openTx;openTx=function(){mono100OldOpenTx();monoFxManual=false;monoFxRequest++;document.querySelector('.mono-extra').open=false;monoFXStatus('Выбери счета и сумму — MONO предложит ориентировочный курс.');};
+const mono100OldTxFields=txFields;txFields=function(){mono100OldTxFields();monoFxManual=false;monoFxRequest++;if(txType.value==='transfer')monoRefreshFX()};
+const mono100OldEditTx=editTx;editTx=function(id){mono100OldEditTx(id);document.querySelector('.mono-extra').open=true;monoFxManual=true;monoFxRequest++};
+const mono100OldQuickTx=quickTx;quickTx=function(type){mono100OldQuickTx(type);if(type==='transfer')monoRefreshFX()};
+function monoRepeatTx(id){const t=state.tx.find(x=>x.id===id);if(!t)return;openTx();txType.value=t.type;txFields();txForm.dataset.edit='';txDate.value=today();txAccount.value=t.account;txAmount.value=t.amount;if(t.type==='transfer'){txTo.value=t.to;txReceived.value=t.received;monoFxManual=true;monoRefreshFX()}else{txCategory.value=t.category;txNote.value=t.note||'';mono092SmartRefresh()}document.querySelector('.mono-extra').open=!!t.note;}
+const mono100OldBillMatch=mono092BillMatch;mono092BillMatch=function(b,category,note){if(mono092Norm(b.name)==='ку'&&mono092Norm(category)==='коммунальные')return 90;return mono100OldBillMatch(b,category,note)};
+txNote.addEventListener('input',()=>{if(txType.value!=='expense'||txForm.dataset.smartManual==='1')return;const key=monoMerchantKey(txNote.value),remembered=state.merchantCategories?.[key];if(remembered&&[...txCategory.options].some(o=>o.value===remembered)){txCategory.value=remembered;mono092SmartRefresh()}});
+const mono100OldTxHTML=txHTML;txHTML=function(t){let html=mono100OldTxHTML(t);return html.replace('aria-label="Редактировать операцию"', 'aria-label="Редактировать операцию"').replace('aria-label="Удалить операцию"', 'aria-label="Удалить операцию"').replace('</div></div></div>',` <button class="btn tiny secondary" onclick="monoRepeatTx('${t.id}')" aria-label="Повторить операцию">↻</button></div></div></div>`)};
+function monoRenderHistory(){const host=document.getElementById('allTx');if(!host)return;const query=mono092Norm(document.getElementById('monoHistorySearch')?.value||'');const f=document.getElementById('filterAccount'),type=document.getElementById('filterType').value;const tx=[...state.tx].sort((a,b)=>b.date.localeCompare(a.date)||(b.created||0)-(a.created||0)).filter(t=>{if(type!=='all'&&t.type!==type)return false;if(f.value!=='all'&&t.account!==f.value&&t.to!==f.value)return false;if(!query)return true;const a=state.accounts.find(a=>a.id===t.account),b=state.accounts.find(a=>a.id===t.to);return mono092Norm([t.date,t.category,t.note,t.amount,a?.name,b?.name].join(' ')).includes(query)});if(!tx.length){host.innerHTML='<div class="empty">Ничего не найдено.</div>';return}let prev='';host.innerHTML=tx.map(t=>{let header='';if(t.date!==prev){prev=t.date;const day=tx.filter(x=>x.date===t.date),parts=[];for(const cur of [...new Set(day.map(x=>state.accounts.find(a=>a.id===x.account)?.currency).filter(Boolean))]){const inc=day.filter(x=>x.type==='income'&&state.accounts.find(a=>a.id===x.account)?.currency===cur).reduce((s,x)=>s+x.amount,0);const out=day.filter(x=>x.type==='expense'&&state.accounts.find(a=>a.id===x.account)?.currency===cur).reduce((s,x)=>s+x.amount,0);if(inc||out)parts.push((inc?'+'+fmt(inc,cur)+' ':'')+(out?'−'+fmt(out,cur):''))}header='<div class="mono-day-heading">'+esc(t.date)+(parts.length?' · '+esc(parts.join(' · ')):'')+'</div>'}return header+txHTML(t)}).join('')};
+const mono100OldRender=render;render=function(){mono100OldRender();monoRenderHistory();monoRenderMonth();monoRunIntegrity(false);monoRenderReconciliations();};
+const mono100OldTxSubmit=txForm.onsubmit;txForm.onsubmit=function(e){
+ const old=state.tx.find(t=>t.id===txForm.dataset.edit),type=txType.value,account=txAccount.value,amount=Number(txAmount.value),to=txTo.value,received=Number(txReceived.value);
+ // Editing/removing a prior income must not silently create a negative balance.
+ if(old){const test=state.tx.filter(t=>t.id!==old.id).concat([{id:old.id,type,account,amount,to,received}]);for(const a of state.accounts){const projected=Number(a.opening)+(state.reconciliations||[]).filter(r=>r.accountId===a.id).reduce((s,r)=>s+Number(r.delta),0)+test.reduce((s,t)=>s+(t.type==='income'&&t.account===a.id?t.amount:0)-(t.type==='expense'&&t.account===a.id?t.amount:0)-(t.type==='transfer'&&t.account===a.id?t.amount:0)+(t.type==='transfer'&&t.to===a.id?t.received:0),0);if(projected<-.005&&projected<balance(a.id)-.005){e.preventDefault();alert('Изменение приведёт к отрицательному остатку '+a.name+'. Сначала проверь последующие операции.');return}}}
+ const beforeCount=state.tx.length;mono100OldTxSubmit(e);
+ const after=state.tx.find(t=>t.id===txForm.dataset.edit)||state.tx.at(-1);
+ // Successful save closes the modal; rejected transaction stays open.
+ if(!txDialog.open&&after&&state.tx.length>=beforeCount){const quick=document.getElementById('monoQuickText');if(quick)quick.value='';monoRememberMerchant(after.type,after.note,after.category);try{localStorage.setItem(KEY,JSON.stringify(state));mirrorToIDB()}catch(err){}}
+};
+const mono100OldDeleteTx=deleteTx;deleteTx=function(id){const t=state.tx.find(x=>x.id===id);if(!t)return;if(t.billId){if(!confirm('Удалить реальный расход '+fmt(t.amount,state.accounts.find(a=>a.id===t.account)?.currency)+'?\nMONO вернёт сумму на счёт и пересчитает долг. Ранее освобождённые резервы автоматически НЕ восстановятся — проверь их после удаления.'))return;const bill=state.bills.find(b=>b.id===t.billId);state.tx=state.tx.filter(x=>x.id!==id);if(bill&&!billFullyPaid(bill))bill.status='pending';save();alert('Связанная оплата удалена. Проверь резерв и последующие ежемесячные платежи.');return}const test=state.tx.filter(x=>x.id!==id);for(const a of state.accounts){const after=Number(a.opening)+(state.reconciliations||[]).filter(r=>r.accountId===a.id).reduce((s,r)=>s+Number(r.delta),0)+test.reduce((s,x)=>s+(x.type==='income'&&x.account===a.id?x.amount:0)-(x.type==='expense'&&x.account===a.id?x.amount:0)-(x.type==='transfer'&&x.account===a.id?x.amount:0)+(x.type==='transfer'&&x.to===a.id?x.received:0),0);if(after<-.005&&after<balance(a.id)-.005)return alert('Удаление создаст отрицательный остаток на '+a.name+'. Сначала проверь последующие операции.')}mono100OldDeleteTx(id)};
+function monoRenderMonth(){const el=document.getElementById('monoMonthReport');if(!el)return;const month=today().slice(0,7);const currencies=[...new Set(state.accounts.map(a=>a.currency))];el.innerHTML=currencies.map(cur=>{const tx=state.tx.filter(t=>t.date.startsWith(month)&&state.accounts.find(a=>a.id===t.account)?.currency===cur),inc=tx.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0),out=tx.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0),reserved=(state.reservations||[]).filter(r=>state.accounts.find(a=>a.id===r.accountId)?.currency===cur).reduce((s,r)=>s+Number(r.amount),0);return '<div class="mono-month-row"><div><strong>'+esc(cur)+'</strong><div class="small muted">Получено '+esc(fmt(inc,cur))+' · потрачено '+esc(fmt(out,cur))+'</div><div class="small muted">Отложено '+esc(fmt(reserved,cur))+'</div></div><div style="text-align:right"><strong class="'+(inc-out>=0?'pos':'neg')+'">'+esc(fmt(inc-out,cur))+'</strong><div class="small muted">Денежный поток</div></div></div>'}).join('')+'<p class="notice">Переводы и сверки остатков не являются доходом или расходом. Валюты не складываются.</p>'}
+function monoIntegrityIssues(){const issues=[];for(const a of state.accounts){const bal=balance(a.id),reserved=reservedForAccount(a.id);if(bal<-.005)issues.push('Отрицательный остаток: '+a.name+' '+fmt(bal,a.currency));if(reserved>bal+.005)issues.push('Резервы превышают остаток: '+a.name+' на '+fmt(reserved-bal,a.currency))}for(const t of state.tx){if(t.billId&&!state.bills?.some(b=>b.id===t.billId))issues.push('Потеряна связь с обязательством у операции '+t.date);if(t.type==='transfer'&&!state.accounts.some(a=>a.id===t.to))issues.push('Не найден счёт назначения у перевода '+t.date)}for(const b of state.bills||[]){if(b.status==='paid'&&billRemaining(b)>.005)issues.push('Платёж '+b.name+' отмечен оплаченным, но осталось '+fmt(billRemaining(b),b.currency));if(billPaidSum(b)>Number(b.amount)+.005)issues.push('Переплата обязательства '+b.name)}const seen=new Set();for(const t of state.tx){const key=[t.date,t.type,t.account,t.amount,t.category,t.to,t.received].join('|');if(seen.has(key))issues.push('Возможный дубль: '+t.date+' '+(t.category||t.type)+' '+t.amount);seen.add(key)}return [...new Set(issues)]}
+function monoRunIntegrity(show){const el=document.getElementById('monoIntegrityReport');if(!el)return;const issues=monoIntegrityIssues();el.innerHTML=issues.length?'<div class="small muted" style="margin-bottom:8px">Найдено замечаний: '+issues.length+'. MONO ничего не исправляет автоматически.</div>'+issues.slice(0,12).map(x=>'<div class="mono-integrity-item">⚠ '+esc(x)+'</div>').join(''):'<div class="mono-integrity-ok">✓ Явных ошибок не найдено. Это не заменяет сверку с банком.</div>';if(show)alert(issues.length?'Найдено замечаний: '+issues.length+'. Подробности в аналитике.':'Явных ошибок не найдено.')}
+function monoOpenReconcile(){const sel=document.getElementById('monoReconcileAccount');sel.innerHTML=state.accounts.map(a=>'<option value="'+esc(a.id)+'">'+esc(a.name)+'</option>').join('');monoReconcileActual.value='';monoReconcileNote.value='';monoReconcileHint();monoReconcileDialog.showModal()}
+function monoReconcileHint(){const a=state.accounts.find(a=>a.id===monoReconcileAccount.value);if(!a)return;const current=balance(a.id),actual=monoReconcileActual.value===''?NaN:Number(monoReconcileActual.value);monoReconcilePreview.textContent='По MONO: '+fmt(current,a.currency)+(Number.isFinite(actual)?' · разница '+fmt(actual-current,a.currency):'. Введи фактическую сумму. Сначала проверь, не пропущена ли операция.')}
+monoReconcileActual.addEventListener('input',monoReconcileHint);
+function monoReconcileSubmit(e){e.preventDefault();const a=state.accounts.find(a=>a.id===monoReconcileAccount.value),actual=Number(monoReconcileActual.value);if(!a||!Number.isFinite(actual))return alert('Проверь счёт и сумму.');const before=balance(a.id),delta=monoRound(actual-before);if(Math.abs(delta)<.005){monoReconcileDialog.close();return alert('Остаток уже совпадает.')}if(actual<0)return alert('Для отрицательного остатка нужна ручная проверка.');if(actual<reservedForAccount(a.id)-.005)return alert('Фактический остаток меньше резервов. Сначала исправь резервы или найди пропущенную операцию.');if(!confirm('Расхождение '+fmt(delta,a.currency)+'. Это корректировка учёта, НЕ доход и НЕ расход.\n\nТы проверил, что операция не пропущена?'))return;state.reconciliations=state.reconciliations||[];state.reconciliations.push({id:uid(),accountId:a.id,date:today(),before,actual,delta,note:monoReconcileNote.value.trim(),created:Date.now()});save();monoReconcileDialog.close()}
+function monoRenderReconciliations(){const el=document.getElementById('monoReconcileHistory');if(!el)return;el.textContent=(state.reconciliations||[]).slice(-3).reverse().map(r=>{const a=state.accounts.find(a=>a.id===r.accountId);return r.date+' · '+(a?.name||'?')+' · '+fmt(r.delta,a?.currency||'GEL')}).join(' / ')||'Сверок пока нет.'}
+// Safer imports: validate first, preview contents, keep a local pre-import snapshot.
+const mono100OldImport=importData;importData=async function(e){const f=e.target.files[0];if(!f)return;try{const obj=JSON.parse(await f.text());validateBackup(obj);const d=obj.data;const details='Счета: '+d.accounts.length+'; операции: '+d.tx.length+'; резервы: '+(d.reservations||[]).length+'; обязательства: '+(d.bills||[]).length+'.';if(!confirm('Проверенная копия. '+details+'\n\nЗАМЕНИТЬ текущие данные? Перед заменой MONO сохранит локальную страховочную копию.'))return;const old={format:'mono-finance-v1',exportedAt:new Date().toISOString(),data:state};localStorage.setItem('mono.finance.preimport.v1',JSON.stringify(old));state=d;initPlanning();save();monoBackupInfo.textContent='Импорт завершён. Страховочная копия прежней базы сохранена на этом устройстве.'}catch(err){alert('Импорт отменён: '+err.message)}finally{e.target.value=''}};
+const mono100OldValidate=validateBackup;validateBackup=function(obj){mono100OldValidate(obj);const d=obj.data;if(d.reconciliations!==undefined){if(!Array.isArray(d.reconciliations)||d.reconciliations.length>10000)throw Error('Некорректные сверки');for(const r of d.reconciliations)if(!d.accounts.some(a=>a.id===r.accountId)||!Number.isFinite(Number(r.delta))||!Number.isFinite(Number(r.actual)))throw Error('Некорректная сверка')}if(d.merchantCategories!==undefined&&(typeof d.merchantCategories!=='object'||Array.isArray(d.merchantCategories)))throw Error('Некорректные категории магазинов');return true};
+function monoRestorePreimport(){try{const raw=localStorage.getItem('mono.finance.preimport.v1');if(!raw)return alert('На этом устройстве нет страховочной копии перед импортом.');const obj=JSON.parse(raw);validateBackup(obj);if(!confirm('Восстановить предыдущую базу? Текущие данные будут заменены. Сначала экспортируй текущий JSON, если он нужен.'))return;state=obj.data;initPlanning();save();alert('Предыдущая база восстановлена.')}catch(e){alert('Восстановление невозможно: '+e.message)}}
+// Keep current app version separate from cached service worker version.
+
+
+// MONO 1.0.1 — reconciliation audit trail. Reconciliations are NOT transactions.
+const MONO_101='1.0.1';
+function monoReconcileHTML(r){
+ const a=state.accounts.find(x=>x.id===r.accountId),cur=a?.currency||'GEL',n=Number(r.delta)||0;
+ const date=String(r.date||'');
+ return '<div class="item mono-reconcile-entry"><div><strong>Сверка остатка</strong><div class="small muted">'+esc(date)+' · '+esc(a?.name||'Удалённый счёт')+'</div>'+
+ (r.note?'<div class="small muted">Причина: '+esc(r.note)+'</div>':'<div class="small muted">Причина пока не указана</div>')+
+ '</div><div class="right"><strong>'+(n>0?'+':'')+esc(fmt(n,cur))+'</strong><div><button class="btn tiny secondary" onclick="monoEditReconcile('+JSON.stringify(r.id).replace(/"/g,'&quot;')+')">Уточнить</button></div></div></div>';
+}
+function monoEditReconcile(id){
+ const r=(state.reconciliations||[]).find(x=>x.id===id);if(!r)return;
+ const a=state.accounts.find(x=>x.id===r.accountId);
+ monoReconcileEditId.value=r.id;monoReconcileEditNote.value=r.note||'';
+ monoReconcileEditInfo.textContent=(r.date||'Без даты')+' · '+(a?.name||'Удалённый счёт')+' · '+fmt(r.delta,a?.currency||'GEL')+'\nПо MONO до сверки: '+fmt(r.before,a?.currency||'GEL')+' · фактически: '+fmt(r.actual,a?.currency||'GEL');
+ monoReconcileEditDialog.showModal();
+}
+function monoSaveReconcileNote(e){
+ e.preventDefault();const r=(state.reconciliations||[]).find(x=>x.id===monoReconcileEditId.value);if(!r)return;
+ r.note=monoReconcileEditNote.value.trim().slice(0,500);save();monoReconcileEditDialog.close();
+}
+function monoDeleteReconcile(){
+ const r=(state.reconciliations||[]).find(x=>x.id===monoReconcileEditId.value);if(!r)return;
+ const a=state.accounts.find(x=>x.id===r.accountId);if(!a)return alert('Счёт сверки не найден.');
+ const after=monoRound(balance(a.id)-Number(r.delta));
+ if(after<-.005)return alert('Удаление сверки сделает баланс отрицательным. Сначала проверь операции.');
+ if(after<reservedForAccount(a.id)-.005)return alert('Удаление сверки оставит на счёте меньше денег, чем зарезервировано. Сначала проверь резервы.');
+ if(!confirm('Удалить корректировку '+fmt(r.delta,a.currency)+'?\n\nБаланс '+a.name+' станет '+fmt(after,a.currency)+'.\n\nЕсли нашлась пропущенная операция, сначала запиши её отдельно. Удаление сверки НЕ удаляет реальные операции.'))return;
+ state.reconciliations=state.reconciliations.filter(x=>x.id!==r.id);save();monoReconcileEditDialog.close();
+}
+// Show reconciliations among regular transactions, ordered by date; never include them in daily cash-flow totals.
+monoRenderHistory=function(){
+ const host=document.getElementById('allTx');if(!host)return;
+ const query=mono092Norm(document.getElementById('monoHistorySearch')?.value||'');
+ const account=document.getElementById('filterAccount').value,type=document.getElementById('filterType').value;
+ const transactions=state.tx.filter(t=>{if(type!=='all'&&t.type!==type)return false;if(account!=='all'&&t.account!==account&&t.to!==account)return false;if(!query)return true;const a=state.accounts.find(x=>x.id===t.account),b=state.accounts.find(x=>x.id===t.to);return mono092Norm([t.date,t.category,t.note,t.amount,a?.name,b?.name].join(' ')).includes(query)}).map(t=>({kind:'tx',item:t}));
+ const reconciliations=(type==='all'?(state.reconciliations||[]):[]).filter(r=>{if(account!=='all'&&r.accountId!==account)return false;if(!query)return true;const a=state.accounts.find(x=>x.id===r.accountId);return mono092Norm([r.date,'сверка','корректировка','остаток',r.note,r.delta,a?.name].join(' ')).includes(query)}).map(r=>({kind:'reconcile',item:r}));
+ const items=[...transactions,...reconciliations].sort((x,y)=>String(y.item.date||'').localeCompare(String(x.item.date||''))||(Number(y.item.created)||0)-(Number(x.item.created)||0));
+ if(!items.length){host.innerHTML='<div class="empty">Ничего не найдено.</div>';return}
+ let prev='';host.innerHTML=items.map(({kind,item})=>{let header='';if(item.date!==prev){prev=item.date;const day=state.tx.filter(x=>x.date===item.date),parts=[];for(const cur of [...new Set(day.map(x=>state.accounts.find(a=>a.id===x.account)?.currency).filter(Boolean))]){const inc=day.filter(x=>x.type==='income'&&state.accounts.find(a=>a.id===x.account)?.currency===cur).reduce((s,x)=>s+x.amount,0);const out=day.filter(x=>x.type==='expense'&&state.accounts.find(a=>a.id===x.account)?.currency===cur).reduce((s,x)=>s+x.amount,0);if(inc||out)parts.push((inc?'+'+fmt(inc,cur)+' ':'')+(out?'−'+fmt(out,cur):''))}header='<div class="mono-day-heading">'+esc(item.date)+(parts.length?' · '+esc(parts.join(' · ')):'')+'</div>'}return header+(kind==='reconcile'?monoReconcileHTML(item):txHTML(item))}).join('');
+};
+
+
+// MONO 1.1.2 — independent, informational planner.
+// Reads finance state for factual analytics; NEVER mutates financial state or invokes save().
+const MONO_BUDGET_VERSION='1.1.5';
+const MONO_PLANNER_KEY='mono.finance.planner.v1';
+function monoPlannerTemplate(){return {}}
+function monoPlannerValid(data){
+ if(!data||typeof data!=='object'||Array.isArray(data)||Object.keys(data).length>240)return false;
+ return Object.entries(data).every(([month,b])=>/^\d{4}-(0[1-9]|1[0-2])$/.test(month)&&b&&Array.isArray(b.expense)&&Array.isArray(b.income)&&b.expense.length<=300&&b.income.length<=300&&[...b.expense,...b.income].every(x=>x&&typeof x.id==='string'&&x.id.length>0&&typeof x.name==='string'&&x.name.trim()&&x.name.length<=100&&['GEL','USD','RUB','USDT','EUR'].includes(x.currency)&&Number.isFinite(Number(x.amount))&&Number(x.amount)>=0&&Number(x.amount)<=1e9));
+}
+function monoPlannerLoad(){
+ try{const raw=localStorage.getItem(MONO_PLANNER_KEY);if(raw){const data=JSON.parse(raw);if(monoPlannerValid(data))return data;console.warn('Planner backup invalid; no financial data touched')}}catch(e){console.warn('Planner storage unavailable',e)}
+ // Read-only migration from 1.1.0, preserving every financial field untouched.
+ if(monoPlannerValid(state.monthBudgets)&&Object.keys(state.monthBudgets).length)return structuredClone(state.monthBudgets);
+ return monoPlannerTemplate();
+}
+let monoPlanner=monoPlannerLoad();
+// 1.1.4 shipped a private person's November/December budget as a public demo.
+// Remove only the exact untouched seed on an otherwise empty ledger, and back it up.
+try{
+ const months=Object.keys(monoPlanner).sort();
+ const oldNames=['Продукты','Такси','Коты','Личные деньги Беллы','Мой табак','Стики Беллы','Интернет','Свидания и досуг'];
+ const oldAmounts=[750,80,150,300,75,220,30,300];
+ const isSeed=months.length===2&&months[0]==='2026-11'&&months[1]==='2026-12'&&months.every((m,i)=>{
+  const b=monoPlanner[m];return b.expense.length===8&&b.income.length===1&&b.expense.every((x,j)=>x.name===oldNames[j]&&Number(x.amount)===oldAmounts[j]&&x.currency==='GEL')&&b.income[0].name==='Sea Livery'&&Number(b.income[0].amount)===(i===0?1500:2000)&&b.income[0].currency==='USD';
+ });
+ const hasActivity=state.tx.length>0||(state.bills||[]).length>0||(state.payroll||[]).length>0||(state.reservations||[]).length>0||state.accounts.some(a=>Number(a.opening)!==0);
+ if(isSeed&&!hasActivity){localStorage.setItem('mono.finance.legacy-planner-backup.v1',JSON.stringify(monoPlanner));monoPlanner={};localStorage.setItem(MONO_PLANNER_KEY,'{}');}
+}catch(e){console.warn('Legacy planner cleanup skipped',e)}
+function monoPlannerSave(){if(!monoPlannerValid(monoPlanner))return alert('Некорректный план: изменения не сохранены.');try{localStorage.setItem(MONO_PLANNER_KEY,JSON.stringify(monoPlanner))}catch(e){alert('Не удалось сохранить план. Экспортируй его резервную копию: '+e.message);return}monoBudgetRender()}
+// Initial planner persistence does not touch the finance database.
+try{if(!localStorage.getItem(MONO_PLANNER_KEY))localStorage.setItem(MONO_PLANNER_KEY,JSON.stringify(monoPlanner))}catch(e){}
+let monoBudgetCurrentMonth=today().slice(0,7);
+function monoBudgetChangeMonth(){monoBudgetCurrentMonth=document.getElementById('monoBudgetMonth').value||today().slice(0,7);monoBudgetRender()}
+function monoBudgetGet(month,create=false){if(!monoPlanner[month]&&create)monoPlanner[month]={expense:[],income:[]};return monoPlanner[month]||{expense:[],income:[]}}
+function monoBudgetCategory(t){
+ const linked=t.billId?(state.bills||[]).find(b=>b.id===t.billId):null;
+ if(linked)return linked.name; // Match an actual paid obligation to a plan row without a second expense.
+ const cat=String(t.category||'').toLowerCase(),note=String(t.note||'').toLowerCase();
+ if(cat==='личные деньги беллы')return 'Личные деньги Беллы';
+ if(cat==='стики беллы'||(cat==='табак'&&/стик|iqos|heets|terea|белл/.test(note)))return 'Стики Беллы';
+ if(cat==='мой табак'||cat==='табак')return 'Мой табак';
+ if(cat==='такси'||(cat==='транспорт'&&/такси|taxi|bolt|yandex go/.test(note)))return 'Такси';
+ if(cat==='интернет'||(cat==='связь'&&/интернет|internet|wifi|wi-fi/.test(note)))return 'Интернет';
+ if(cat==='свидания и досуг'||(cat==='кафе и рестораны'&&/свидан|досуг|развлечен/.test(note)))return 'Свидания и досуг';
+ if(cat==='коты')return 'Коты';
+ if(cat==='продукты')return 'Продукты';
+ return String(t.category||'Другое');
+}
+function monoBudgetSource(t){
+ const cat=String(t.category||'').toLowerCase(),note=String(t.note||'').toLowerCase();
+ if(/sea\s*livery|sea\s*level|си\s*ливери|си\s*левел/.test(note+' '+cat))return 'Sea Livery';
+ if(cat==='зарплата'||cat==='аванс зарплаты')return (monoBudgetGet(monoBudgetCurrentMonth).income||[]).some(x=>x.name==='Sea Livery')?'Sea Livery':'Зарплата';
+ return String(t.category||'Другое');
+}
+function monoBudgetActual(kind,name,currency,month){
+ return Math.round(state.tx.filter(t=>t.type===kind&&String(t.date).startsWith(month)&&state.accounts.find(a=>a.id===t.account)?.currency===currency)
+ .filter(t=>kind==='expense'?monoBudgetCategory(t)===name:monoBudgetSource(t)===name)
+ .reduce((sum,t)=>sum+Number(t.amount||0),0)*100)/100;
+}
+function monoBudgetTotal(kind,currency,month){
+ return Math.round(state.tx.filter(t=>t.type===kind&&String(t.date).startsWith(month)&&state.accounts.find(a=>a.id===t.account)?.currency===currency).reduce((sum,t)=>sum+Number(t.amount||0),0)*100)/100;
+}
+function monoBudgetPlanTotal(kind,currency,month){return monoBudgetGet(month)[kind].filter(x=>x.currency===currency).reduce((n,x)=>n+Number(x.amount||0),0)}
+function monoBudgetRow(item,kind,month){
+ const fact=monoBudgetActual(kind,item.name,item.currency,month),amount=Number(item.amount),pct=amount>0?fact/amount*100:(fact>0?100:0),over=kind==='expense'&&fact>amount+0.005;
+ const remaining=amount-fact;
+ return `<div class="mono-budget-row"><div class="mono-budget-row-head"><div class="mono-budget-row-name">${esc(item.name)} <span class="tag">${esc(item.currency)}</span></div><div class="mono-budget-actions"><button class="btn tiny secondary" onclick="monoBudgetOpen('${kind}','${item.id}')" aria-label="Изменить">✎</button><button class="btn tiny secondary" onclick="monoBudgetDelete('${kind}','${item.id}')" aria-label="Удалить">×</button></div></div>`+
+ `<div class="mono-budget-amounts">Факт <strong>${esc(fmt(fact,item.currency))}</strong> · план ${esc(fmt(amount,item.currency))}</div><div class="mono-budget-bar ${over?'over':''}"><div style="width:${Math.max(0,Math.min(100,pct))}%"></div></div>`+
+ `<div class="mono-budget-subtle">${kind==='expense'?(over?'Превышение: '+fmt(-remaining,item.currency):'Осталось по лимиту: '+fmt(Math.max(0,remaining),item.currency)):'До цели: '+fmt(Math.max(0,remaining),item.currency)} · ${Math.round(pct)}% плана</div></div>`;
+}
+// Planner-only indicative FX. Rates are USD -> currency, never applied to account balances.
+const MONO_PLAN_FX_KEY='mono.finance.planner.fx.v1';
+const MONO_PLAN_FX_MAX_AGE=24*60*60*1000;
+let monoPlanFx=null,monoPlanFxBusy=false,monoPlanFxError='';
+try{const saved=JSON.parse(localStorage.getItem(MONO_PLAN_FX_KEY)||'null');if(monoPlanFxValid(saved))monoPlanFx=saved}catch(e){}
+function monoPlanFxValid(x){return !!(x&&typeof x==='object'&&Number.isFinite(x.fetchedAt)&&x.fetchedAt>0&&x.rates&&typeof x.rates==='object'&&Number(x.rates.USD)===1&&Number(x.rates.GEL)>0&&Number(x.rates.RUB)>0&&typeof x.source==='string')}
+function monoPlanFxDate(x){return x?new Date(x.fetchedAt).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}):'—'}
+function monoPlanRate(cur){if(cur==='USD')return 1;const r=monoPlanFx?.rates?.[cur];return Number.isFinite(Number(r))&&Number(r)>0?Number(r):null}
+function monoPlanToUSD(amount,cur){const r=monoPlanRate(cur);return r===null?null:Number(amount)/r}
+function monoPlanMoneyUSD(n){return new Intl.NumberFormat('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:2}).format(n)+' $'}
+function monoPlanAggregateUSD(items){let sum=0,missing=[];for(const x of items){const amount=Number(x.amount||0);if(!amount)continue;const usd=monoPlanToUSD(amount,x.currency);if(usd===null)missing.push(x.currency);else sum+=usd}return {value:missing.length?null:sum,missing:[...new Set(missing)]}}
+function monoPlanItems(kind,month,actual){if(!actual)return monoBudgetGet(month)[kind].map(x=>({currency:x.currency,amount:Number(x.amount||0)}));const totals={};for(const t of state.tx){if(t.type!==kind||!String(t.date||'').startsWith(month))continue;const cur=state.accounts.find(a=>a.id===t.account)?.currency;if(!cur)continue;totals[cur]=(totals[cur]||0)+Number(t.amount||0)}return Object.entries(totals).map(([currency,amount])=>({currency,amount}))}
+function monoPlanCalc(){const m=monoBudgetCurrentMonth;return {expensePlan:monoPlanAggregateUSD(monoPlanItems('expense',m,false)),expenseActual:monoPlanAggregateUSD(monoPlanItems('expense',m,true)),incomePlan:monoPlanAggregateUSD(monoPlanItems('income',m,false)),incomeActual:monoPlanAggregateUSD(monoPlanItems('income',m,true))}}
+function monoPlanFXCard(kind,calc){const p=calc[kind+'Plan'],a=calc[kind+'Actual'];const delta=p.value!==null&&a.value!==null?p.value-a.value:null;const missing=[...new Set([...p.missing,...a.missing])];const label=kind==='expense'?'Осталось по бюджету':'До цели по доходу';const deltaLabel=delta===null?'—':(delta<0?'−':'')+monoPlanMoneyUSD(Math.abs(delta));return `<div class="mono-fx-card ${kind==='income'?'mono-fx-income':''}"><div class="mono-fx-eyebrow">ИТОГО В ДОЛЛАРАХ · ${kind==='expense'?'РАСХОДЫ':'ДОХОДЫ'}</div><div class="mono-fx-stats"><div><span>План</span><strong>${p.value===null?'—':monoPlanMoneyUSD(p.value)}</strong></div><div><span>${kind==='expense'?'Потрачено':'Получено'}</span><strong>${a.value===null?'—':monoPlanMoneyUSD(a.value)}</strong></div></div><div class="mono-fx-difference"><span>${label}</span><strong class="${delta!==null&&delta<0?'neg':'pos'}">${deltaLabel}</strong></div>${missing.length?`<p class="mono-fx-warning">Нет курса для ${esc(missing.join(', '))}; итог пока недоступен.</p>`:''}</div>`}
+function monoPlanFxStatus(){const x=monoPlanFx,stale=x&&Date.now()-x.fetchedAt>MONO_PLAN_FX_MAX_AGE;return `<div class="mono-fx-status"><span>${monoPlanFxBusy?'Обновляем курсы…':x?`Ориентировочный рыночный курс · ${esc(x.source)} · ${esc(monoPlanFxDate(x))}${stale?' · устарел':''}`:'Курсы пока не загружены'}${monoPlanFxError?' · '+esc(monoPlanFxError):''}</span><button type="button" class="btn tiny secondary" onclick="monoPlanFetchFX(true)" ${monoPlanFxBusy?'disabled':''}>↻ Курсы</button></div><p class="mono-fx-disclaimer">USD-эквивалент — справочный пересчёт, не курс банка и не точный курс Google. Никаких обменов или списаний.</p>`}
+function monoPlanResultCard(c){const ip=c.incomePlan.value,ep=c.expensePlan.value,ia=c.incomeActual.value,ea=c.expenseActual.value,plan=ip!==null&&ep!==null?ip-ep:null,actual=ia!==null&&ea!==null?ia-ea:null,gap=plan!==null&&actual!==null?actual-plan:null;const val=(n)=>n===null?'—':(n>0?'+':n<0?'−':'')+monoPlanMoneyUSD(Math.abs(n));return `<div class="mono-plan-result"><div class="mono-plan-result-head"><span class="mono-plan-mark-result"></span><strong>Финансовый результат месяца</strong></div><div class="mono-plan-result-grid"><div><span>План: доходы − расходы</span><strong class="${plan!==null&&plan<0?'neg':'pos'}">${val(plan)}</strong></div><div><span>Факт: получено − потрачено</span><strong class="${actual!==null&&actual<0?'neg':'pos'}">${val(actual)}</strong></div></div><div class="mono-plan-result-delta"><span>Отклонение факта от плана</span><strong class="${gap!==null&&gap<0?'neg':'pos'}">${val(gap)}</strong></div><p class="notice">Фактический результат — денежный поток операций за выбранный месяц, не остаток счетов. Плановый результат не является гарантированным заработком.</p></div>`}
+async function monoPlanFetchFX(force=false){if(monoPlanFxBusy||(!force&&monoPlanFx&&Date.now()-monoPlanFx.fetchedAt<MONO_PLAN_FX_MAX_AGE))return;monoPlanFxBusy=true;monoPlanFxError='';monoBudgetRender();let rates=null,source='';try{
+ const ctrl=new AbortController(),timer=setTimeout(()=>ctrl.abort(),9000);
+ try{const res=await fetch('https://open.er-api.com/v6/latest/USD',{signal:ctrl.signal,cache:'no-store'});if(!res.ok)throw Error('HTTP '+res.status);const d=await res.json();if(d.result!=='success'||!d.rates?.GEL||!d.rates?.RUB)throw Error('Нет курсов GEL/RUB');rates=d.rates;source='ExchangeRate-API (open.er-api.com)'}finally{clearTimeout(timer)}
+ }catch(err){try{const ctrl=new AbortController(),timer=setTimeout(()=>ctrl.abort(),9000);try{const res=await fetch('https://latest.currency-api.pages.dev/v1/currencies/usd.json',{signal:ctrl.signal,cache:'no-store'});if(!res.ok)throw Error('HTTP '+res.status);const d=await res.json();if(!d.usd?.gel||!d.usd?.rub)throw Error('Нет курсов GEL/RUB');rates={USD:1,...Object.fromEntries(Object.entries(d.usd).map(([k,v])=>[k.toUpperCase(),v]))};source='Currency API (currency-api.pages.dev)'}finally{clearTimeout(timer)}}catch(e){monoPlanFxError=monoPlanFx?'Сеть недоступна, показан сохранённый курс':'Нет доступа к курсам; USD-итоги временно недоступны'}}
+ if(rates){const clean={USD:1};for(const cur of ['GEL','RUB','EUR','USDT'])if(Number.isFinite(Number(rates[cur]))&&Number(rates[cur])>0)clean[cur]=Number(rates[cur]);const obj={rates:clean,fetchedAt:Date.now(),source};if(monoPlanFxValid(obj)){monoPlanFx=obj;try{localStorage.setItem(MONO_PLAN_FX_KEY,JSON.stringify(obj))}catch(e){}}else monoPlanFxError='Получены некорректные курсы'}
+ monoPlanFxBusy=false;monoBudgetRender();}
+function monoBudgetRender(){
+ const input=document.getElementById('monoBudgetMonth');if(!input)return;
+ const month=monoBudgetCurrentMonth;input.value=month;
+ const b=monoBudgetGet(month),currencies=[...new Set([...b.expense,...b.income].map(x=>x.currency))];
+ const summary=document.getElementById('monoBudgetSummary');
+ const expenseCurrencies=[...new Set(['GEL',...b.expense.map(x=>x.currency)])];
+ const incomeCurrencies=[...new Set(['USD',...b.income.map(x=>x.currency)])];
+ const summarySection=(kind,cs)=>`<div class="mono-plan-section"><div class="mono-plan-section-title ${kind}"><span class="mono-plan-mark"></span>${kind==='expense'?'План расходов':'План доходов'}</div>${cs.map(cur=>{
+  const planned=monoBudgetPlanTotal(kind,cur,month),actual=monoBudgetTotal(kind,cur,month),remaining=planned-actual;
+  return `<div class="mono-plan-currency-card ${kind==='income'?'mono-plan-income-card':''}" style="margin-bottom:9px"><div class="eyebrow">${kind==='expense'?'РАСХОДЫ':'ДОХОДЫ'} · ${esc(cur)}</div><div class="mono-plan-currency-figures"><div><span class="small muted">План</span><strong>${esc(fmt(planned,cur))}</strong></div><div><span class="small muted">${kind==='expense'?'Потрачено':'Получено'}</span><strong>${esc(fmt(actual,cur))}</strong></div><div><span class="small muted">${kind==='expense'?'Осталось':'До цели'}</span><strong class="${kind==='expense'&&remaining<0?'neg':'pos'}">${esc(fmt(kind==='income'?Math.max(0,remaining):remaining,cur))}</strong></div></div></div>`;
+ }).join('')}</div>`;
+ const fx=monoPlanCalc();
+ summary.innerHTML=`<div class="mono-plan-summary">${summarySection('expense',expenseCurrencies)}${monoPlanFXCard('expense',fx)}${summarySection('income',incomeCurrencies)}${monoPlanFXCard('income',fx)}</div>${monoPlanResultCard(fx)}${monoPlanFxStatus()}<p class="mono-budget-monthnote">Планы не изменяют счета. Факт — только подтверждённые операции. Валюты считаются отдельно; USD-итог — справочная оценка.</p>`;
+ for(const kind of ['expense','income']){
+  const el=document.getElementById(kind==='expense'?'monoBudgetExpenses':'monoBudgetIncome');
+  const rows=b[kind]||[];
+  let extra='';
+  if(kind==='expense'){
+   const names=new Set(rows.map(x=>x.currency+'|'+x.name));
+   const totals={};for(const t of state.tx){if(t.type!=='expense'||!String(t.date).startsWith(month))continue;const cur=state.accounts.find(a=>a.id===t.account)?.currency;if(!cur)continue;const name=monoBudgetCategory(t);if(names.has(cur+'|'+name))continue;const key=cur+'|'+name;totals[key]=(totals[key]||0)+Number(t.amount||0)}
+   const keys=Object.keys(totals);if(keys.length)extra=`<div class="card"><strong>Расходы без лимита</strong><p class="notice">Учитываются в фактическом итоге, но не имеют заданного плана.</p>${keys.map(k=>{const [cur,...parts]=k.split('|');return `<div class="mono-budget-bills-row"><span>${esc(parts.join('|'))}</span><strong>${esc(fmt(totals[k],cur))}</strong></div>`}).join('')}</div>`;
+  }
+  el.innerHTML=rows.length?`<div class="card">${rows.map(x=>monoBudgetRow(x,kind,month)).join('')}</div>`+extra:`<div class="card"><div class="empty">На этот месяц пока нет плана. Добавь статью или скопируй предыдущий месяц.</div></div>`+extra;
+ }
+ const bills=(state.bills||[]).filter(x=>x.status==='pending'&&String(x.due||'').startsWith(month));
+ document.getElementById('monoBudgetBills').innerHTML=bills.length?bills.map(x=>`<div class="mono-budget-bills-row"><span>${esc(x.name)} <span class="muted small">· ${esc(x.due)}</span></span><strong>${esc(fmt(x.amount,x.currency))}</strong></div>`).join('')+`<p class="notice">Список из раздела «Цели». Платежи не прибавляются к расходам второй раз. Когда оплатишь, операция попадёт в факт.</p>`:`<div class="empty">Нет неоплаченных обязательств с датой в выбранном месяце. Полный календарь — в «Целях».</div>`;
+}
+function monoBudgetOpen(kind,id=''){
+ const b=monoBudgetGet(monoBudgetCurrentMonth),item=b[kind].find(x=>x.id===id);
+ monoBudgetForm.reset();monoBudgetKind.value=kind;monoBudgetEditId.value=id;
+ monoBudgetDialogTitle.textContent=(id?'Изменить ':'Добавить ')+(kind==='expense'?'статью расходов':'цель по доходу');
+ monoBudgetName.value=item?.name||'';monoBudgetAmount.value=item?.amount??'';monoBudgetCurrency.value=item?.currency|| (kind==='expense'?'GEL':'USD');
+ monoBudgetModalHint.textContent=kind==='income'?'План дохода — цель, а не начисление. В факт попадут только реальные поступления, сопоставленные с категорией или названием источника.':'Факт сопоставляется с категориями операций и названиями связанных обязательств.';
+ monoBudgetDialog.showModal();
+}
+function monoBudgetSubmit(e){
+ e.preventDefault();const kind=monoBudgetKind.value,name=monoBudgetName.value.trim(),amount=Number(monoBudgetAmount.value),currency=monoBudgetCurrency.value,id=monoBudgetEditId.value;
+ if(!name||!Number.isFinite(amount)||amount<0||amount>1e9)return alert('Проверь название и сумму.');
+ const b=monoBudgetGet(monoBudgetCurrentMonth,true),arr=b[kind];
+ if(arr.some(x=>x.id!==id&&x.name.toLowerCase()===name.toLowerCase()&&x.currency===currency))return alert('Такая статья уже есть в выбранной валюте.');
+ const item={id:id||uid(),name,amount:Math.round(amount*100)/100,currency};
+ if(id){const i=arr.findIndex(x=>x.id===id);if(i<0)return;arr[i]=item}else arr.push(item);
+ monoPlannerSave();monoBudgetDialog.close();
+}
+function monoBudgetDelete(kind,id){const b=monoBudgetGet(monoBudgetCurrentMonth);const item=b[kind].find(x=>x.id===id);if(!item)return;
+ if(!confirm('Удалить лимит «'+item.name+'»? Реальные операции не изменятся.'))return;
+ b[kind]=b[kind].filter(x=>x.id!==id);monoPlannerSave();
+}
+function monoBudgetCopyPrev(){
+ const d=new Date(monoBudgetCurrentMonth+'-01T12:00:00');d.setMonth(d.getMonth()-1);const prev=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+ const from=monoBudgetGet(prev),to=monoBudgetGet(monoBudgetCurrentMonth);
+ if(!from.expense.length&&!from.income.length)return alert('В предыдущем месяце нет бюджета для копирования.');
+ if((to.expense.length||to.income.length)&&!confirm('Заменить план на '+monoBudgetCurrentMonth+' планом из '+prev+'? Реальные операции и обязательства останутся без изменений.'))return;
+ monoPlanner[monoBudgetCurrentMonth]={expense:from.expense.map(x=>({...x,id:uid()})),income:from.income.map(x=>({...x,id:uid()}))};monoPlannerSave();
+}
+// The finance renderer only triggers read-only planner refresh.
+const mono111PreviousRender=render;
+render=function(){mono111PreviousRender();monoBudgetRender()};
+const mono111PreviousShowView=showView;
+showView=function(v){mono111PreviousShowView(v);if(v==='budget'){monoBudgetRender();monoPlanFetchFX()}};
+// Financial JSON import/reset never writes or replaces planner data.
+function monoPlannerDownload(obj,filename){const url=URL.createObjectURL(new Blob([JSON.stringify(obj,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500)}
+function monoPlannerExport(){monoPlannerDownload({format:'mono-planner-v1',exportedAt:new Date().toISOString(),months:monoPlanner},'mono-planner-'+today()+'.json')}
+async function monoPlannerImport(event){const f=event.target.files?.[0];if(!f)return;try{if(f.size>3000000)throw Error('Слишком большой файл');const obj=JSON.parse(await f.text());if(obj.format!=='mono-planner-v1'||!monoPlannerValid(obj.months))throw Error('Неверный формат или повреждённый план');if(!confirm('Заменить только месячные планы? Финансовые счета и операции не изменятся.'))return;monoPlanner=structuredClone(obj.months);monoPlannerSave()}catch(e){alert('Импорт плана отменён: '+e.message)}finally{event.target.value=''}}
+function monoPlannerChart(){
+ const el=document.getElementById('monoPlannerDashboard');if(!el)return;
+ const currency=document.getElementById('monoPlannerCurrency')?.value||'GEL';
+ const b=monoBudgetGet(monoBudgetCurrentMonth);
+ const expense=b.expense.filter(x=>x.currency===currency),income=b.income.filter(x=>x.currency===currency);
+ const expenseTotal=expense.reduce((v,x)=>v+Number(x.amount),0),incomeTotal=income.reduce((v,x)=>v+Number(x.amount),0);
+ const incomeActual=monoBudgetTotal('income',currency,monoBudgetCurrentMonth);
+ const colors=['#b5f35c','#7fbca3','#d7b26e','#8e9cdb','#de8d9e','#81b8cf','#a0b17b','#c0a6d5','#e1aa86'];
+ const sorted=expense.slice().sort((a,b)=>b.amount-a.amount);let cursor=0;
+ const segments=sorted.map((x,i)=>{const start=cursor;cursor+=expenseTotal?Number(x.amount)/expenseTotal*100:0;return `${colors[i%colors.length]} ${start.toFixed(3)}% ${cursor.toFixed(3)}%`});
+ const legend=sorted.map((x,i)=>`<div class="mono-planner-legend"><span class="mono-planner-dot" style="background:${colors[i%colors.length]}"></span><span>${esc(x.name)}</span><strong>${esc(fmt(x.amount,currency))}</strong></div>`).join('');
+ const incomeRows=income.slice().sort((a,b)=>b.amount-a.amount).map(x=>{
+  const actual=monoBudgetActual('income',x.name,currency,monoBudgetCurrentMonth),percent=x.amount>0?Math.min(100,actual/x.amount*100):0;
+  return `<div class="mono-plan-income-item"><div class="mono-plan-income-line"><span>${esc(x.name)}</span><strong>${esc(fmt(x.amount,currency))}</strong></div><div class="mono-plan-income-progress"><div style="width:${Math.max(0,percent)}%"></div></div><div class="mono-plan-income-foot">Получено ${esc(fmt(actual,currency))} · ${Math.round(percent)}% цели</div></div>`;
+ }).join('');
+ const months=Array.from({length:6},(_,i)=>{const date=new Date(monoBudgetCurrentMonth+'-01T12:00:00');date.setMonth(date.getMonth()+i-2);return date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')});
+ const makeTrend=(kind,label)=>{const vals=months.map(m=>monoBudgetPlanTotal(kind,currency,m)),max=Math.max(1,...vals);
+  return `<div class="card"><div class="mono-planner-trend-title">${label} · 6 месяцев</div><div class="mono-planner-trend">${months.map((m,i)=>`<div class="mono-planner-col"><div class="mono-planner-col-bar"><div style="height:${Math.max(0,vals[i]/max*100)}%;${kind==='income'?'background:#7fbca3':''}"></div></div><span>${esc(m.slice(5))}</span><small>${vals[i]?Math.round(vals[i]):'—'}</small></div>`).join('')}</div><p class="notice">Только сохранённые планы, не реальные поступления и списания.</p></div>`;
+ };
+ el.innerHTML=`<div class="mono-plan-dashboard-split"><div class="card"><div class="sectiontitle"><strong>Расходы · ${esc(currency)}</strong><span class="small muted">${esc(fmt(expenseTotal,currency))}</span></div><div class="mono-planner-chart-layout"><div class="mono-planner-donut" role="img" aria-label="Распределение расходов" style="background:${expenseTotal?'conic-gradient('+segments.join(',')+')':'#3a4239'}"><div><span class="small muted">План</span><strong>${esc(fmt(expenseTotal,currency))}</strong></div></div><div class="mono-planner-legends">${legend||'<div class="empty">Нет статей расходов в '+esc(currency)+'</div>'}</div></div></div>`+
+ `<div class="card"><div class="sectiontitle"><strong>Доходы · ${esc(currency)}</strong><span class="small muted">${esc(fmt(incomeTotal,currency))}</span></div><div class="mono-plan-income-progress"><div style="width:${incomeTotal>0?Math.max(0,Math.min(100,incomeActual/incomeTotal*100)):0}%"></div></div><div class="mono-plan-income-foot">Факт ${esc(fmt(incomeActual,currency))} · до цели ${esc(fmt(Math.max(0,incomeTotal-incomeActual),currency))}</div><div class="mono-plan-income-list">${incomeRows||'<div class="empty">Нет целей дохода в '+esc(currency)+'. Добавь источник ниже.</div>'}</div><p class="notice">Цели не считаются полученными деньгами.</p></div></div>`+
+ `<div class="mono-plan-dashboard-split">${makeTrend('expense','План расходов '+currency)}${makeTrend('income','План доходов '+currency)}</div>`;
+}
+const mono111PreviousBudgetRender=monoBudgetRender;
+monoBudgetRender=function(){mono111PreviousBudgetRender();monoPlannerChart()};
+monoBudgetRender();
+monoPlanFetchFX();
+
+</script><script>
+// Standalone currency converter: no writes to MONO financial state.
+const MONO_CURRENCY_KEY='mono.currency.converter.v1';
+const MONO_CURRENCY_BUY=2.609,MONO_CURRENCY_SELL=2.583;
+let monoCurrency={currency:'GEL',amount:'100',rub:null,date:'',fetchedAt:0,source:''};
+try{const stored=JSON.parse(localStorage.getItem(MONO_CURRENCY_KEY)||'null');if(stored&&['GEL','USD','RUB'].includes(stored.currency)&&typeof stored.amount==='string')monoCurrency={...monoCurrency,...stored}}catch(e){}
+function monoCurrencySave(){try{localStorage.setItem(MONO_CURRENCY_KEY,JSON.stringify(monoCurrency))}catch(e){}}
+function monoCurrencyNumber(){const str=monoCurrency.amount.replace(/\s/g,'').replace(',','.');if(!str||!/^(?:\d+\.?\d*|\.\d+)$/.test(str))return null;const n=Number(str);return Number.isFinite(n)&&n>=0?n:null}
+function monoCurrencyValue(to){const n=monoCurrencyNumber(),from=monoCurrency.currency,r=monoCurrency.rub;if(n===null)return null;if(to===from)return n;if((to==='RUB'||from==='RUB')&&!(Number.isFinite(r)&&r>0))return null;
+ if(from==='GEL')return to==='USD'?n/MONO_CURRENCY_BUY:n/MONO_CURRENCY_BUY*r;
+ if(from==='USD')return to==='GEL'?n*MONO_CURRENCY_SELL:n*r;
+ return to==='USD'?n/r:n/r*MONO_CURRENCY_SELL;
+}
+function monoCurrencyFmt(n){return n===null?'—':new Intl.NumberFormat('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:2}).format(n)}
+function monoCurrencyRender(){const root=document.getElementById('monoCurrencyCards');if(!root)return;root.innerHTML=['GEL','USD','RUB'].map(c=>`<button type="button" class="mono-currency-tile ${c===monoCurrency.currency?'active':''}" onclick="monoCurrencySelect('${c}')"><span class="fx-top"><span>${{GEL:'🇬🇪',USD:'🇺🇸',RUB:'🇷🇺'}[c]}</span><span>${c}</span></span><span class="fx-number">${monoCurrencyFmt(monoCurrencyValue(c))}</span><span class="fx-hint">${c===monoCurrency.currency?'Ввод':'Расчёт'}</span></button>`).join('');document.getElementById('monoCurrencyActive').textContent=monoCurrency.currency;document.getElementById('monoCurrencyRub').textContent=monoCurrency.rub?monoCurrencyFmt(monoCurrency.rub)+' ₽':'—';}
+function monoCurrencyInput(v){monoCurrency.amount=v;monoCurrencySave();monoCurrencyRender()}
+function monoCurrencySelect(c){if(!['GEL','USD','RUB'].includes(c))return;const v=monoCurrencyValue(c);monoCurrency.currency=c;monoCurrency.amount=v===null?'':String(Math.round((v+Number.EPSILON)*100)/100);document.getElementById('monoCurrencyAmount').value=monoCurrency.amount;monoCurrencySave();monoCurrencyRender();document.getElementById('monoCurrencyAmount').focus()}
+function monoCurrencyStatus(t){const el=document.getElementById('monoCurrencyStatus');if(el)el.textContent=t}
+async function monoCurrencyRefresh(force=false){if(monoCurrencyLoading)return;if(!force&&monoCurrency.rub&&Date.now()-monoCurrency.fetchedAt<6*3600000){monoCurrencyStatus('Курс RUB: '+monoCurrency.date+' · сохранённый');return}monoCurrencyLoading=true;monoCurrencyStatus('Обновляем справочный курс RUB…');const urls=['https://latest.currency-api.pages.dev/v1/currencies/usd.min.json','https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.min.json'];let ok=false;
+ for(const url of urls){const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);try{const res=await fetch(url,{signal:controller.signal,cache:'no-store'});if(!res.ok)throw Error('HTTP '+res.status);const d=await res.json();const rub=Number(d?.usd?.rub);if(!Number.isFinite(rub)||rub<=0)throw Error('Некорректный курс');monoCurrency.rub=rub;monoCurrency.date=d.date||new Date().toISOString().slice(0,10);monoCurrency.fetchedAt=Date.now();monoCurrency.source='Currency API';monoCurrencySave();ok=true;break}catch(e){console.warn('Currency rate source failed',e)}finally{clearTimeout(timer)}}monoCurrencyLoading=false;monoCurrencyRender();monoCurrencyStatus(ok?'Справочный курс RUB на '+monoCurrency.date+(monoCurrency.rub?' · обновлён':''):monoCurrency.rub?'Нет сети: используется последний курс RUB от '+monoCurrency.date:'Курс RUB недоступен. GEL и USD работают по заданным курсам TBC.');}
+let monoCurrencyLoading=false;
+function monoCurrencyOpen(){const input=document.getElementById('monoCurrencyAmount');if(!input)return;input.value=monoCurrency.amount;monoCurrencyRender();monoCurrencyRefresh()}
+</script></body></html>
